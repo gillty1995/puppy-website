@@ -15,7 +15,7 @@ export default function CareSection() {
       {/* Learn More button */}
       <div className="mt-8 md:mt-0">
         <Link href="/care">
-          <button className="px-6 py-2 bg-emerald-600 text-white font-medium rounded-full hover:bg-emerald-500 delay-100 ease-in-out transition text-xl">
+          <button className="cursor-pointer px-6 py-2 bg-emerald-600 text-white font-medium rounded-full hover:bg-emerald-500 delay-100 ease-in-out transition text-xl">
             Learn More
           </button>
         </Link>

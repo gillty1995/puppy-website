@@ -69,9 +69,10 @@ export default function ContactForm() {
               className="
                 absolute top-1/2 right-0 -translate-y-1/2
                 p-2
-                text-gray-700
+                text-gray-600
                 hover:text-gray-900
                 focus:outline-none
+                cursor-pointer
               "
             >
               <FaArrowRight size={24} />
