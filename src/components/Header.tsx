@@ -2,7 +2,8 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useCallback } from "react";
+import { useCallback, useState, useEffect } from "react";
+import { useAdmin } from "@/app/context/AdminContext";
 
 export default function Header() {
   const { scrollY } = useScroll();
@@ -14,6 +15,9 @@ export default function Header() {
   const titleOpacity = useTransform(scrollY, [0, 100], [1, 0]);
   // collapse title section height from 200px → 0
   const titleMaxHeight = useTransform(scrollY, [0, 150], [200, 0]);
+
+  const { isAdmin } = useAdmin();
+  const blogHref = isAdmin ? "/admin/blog" : "/blog";
 
   // Smooth scroll handler for nav links
   const handleNavClick = useCallback((section: string, e: React.MouseEvent) => {
@@ -58,7 +62,7 @@ export default function Header() {
           </div>
           <ul className="flex space-x-8 text-sm font-medium text-gray-700">
             <li>
-              <a href="/blog" className="hover:underline">
+              <a href={blogHref} className="hover:underline">
                 Blog
               </a>
             </li>
