@@ -5,6 +5,18 @@
     "body": "We're thrilled to introduce you to Chenille, our adorable cream-colored girl who's an absolute expert at cuddling! With her soft, fluffy coat and gentle eyes, Chenille has quickly become the sweetheart of our home.\r\n\r\nChenille loves nothing more than curling up in a warm lap or nestling close to you for endless snuggle sessions. She's playful yet incredibly affectionate, making her the perfect companion for cozy evenings and heartwarming moments.\r\n\r\nStay tuned as we continue to share more updates and adorable photos of Chenille as she grows. She's bound to steal your heart just as she's stolen ours!\r\n\r\nInterested in welcoming Chenille into your home? Reach out to learn more about adopting this little cuddle champion!",
     "images": [
       "/uploads/1745415777889-pegah-mostafavizadeh-4dBce3hxiVY-unsplash.jpg"
+    ],
+    "comments": [
+      {
+        "email": "test@email.com",
+        "comment": "She's so cute!!!",
+        "createdAt": "2025-04-24T17:48:22.153Z"
+      },
+      {
+        "email": "test2@email.com",
+        "comment": "So tiny!",
+        "createdAt": "2025-04-24T18:28:52.549Z"
+      }
     ]
   },
   {
@@ -14,6 +26,13 @@
     "images": [
       "/uploads/1745360214212-ian-deneumostier-APVBt7gCujU-unsplash.jpg",
       "/uploads/1745360214222-ian-deneumostier-VOVzREXqsNk-unsplash.jpg"
+    ],
+    "comments": [
+      {
+        "email": "test@email.com",
+        "comment": "OMG! When can I meet them?!",
+        "createdAt": "2025-04-24T17:48:56.177Z"
+      }
     ]
   }
 ]

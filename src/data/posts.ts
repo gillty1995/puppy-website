@@ -1,11 +1,18 @@
 import fs from "fs/promises";
 import path from "path";
 
+export interface Comment {
+  email: string;
+  comment: string;
+  createdAt: string;
+}
+
 export interface Post {
   id: string;
   title: string;
   body: string;
   images: string[];
+  comments: Comment[];
 }
 
 const filePath = path.join(process.cwd(), "src", "data", "posts.json");

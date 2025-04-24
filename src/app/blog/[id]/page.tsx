@@ -1,4 +1,5 @@
 import { readPosts, Post } from "@/data/posts";
+import CommentsSection from "@/components/CommentSection";
 import Link from "next/link";
 
 interface Params {
@@ -10,7 +11,7 @@ export default async function PostPage({ params }: Params) {
   const posts = await readPosts();
   const post = posts.find((p) => p.id === params.id);
 
-  // 2) If not found, render a friendly message
+  // 2) If not found, render a message
   if (!post) {
     return (
       <section id="blog-post" className="py-16 bg-gray-50 px-6 md:px-20">
@@ -51,6 +52,9 @@ export default async function PostPage({ params }: Params) {
 
           <p className="text-gray-700 whitespace-pre-line">{post.body}</p>
         </div>
+
+        {/* Comments and form */}
+        <CommentsSection postId={post.id} />
       </div>
     </section>
   );
