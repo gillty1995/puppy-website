@@ -5,6 +5,12 @@ Includes secure admin functionality and a contact form powered by Nodemailer.
 
 ---
 
+## 🌐 Live Website
+
+- **Link:** tba...
+
+---
+
 ## 🚀 Tech Stack
 
 - **Framework:** Next.js
@@ -34,7 +40,7 @@ Includes secure admin functionality and a contact form powered by Nodemailer.
   - Sends inquiries via Nodemailer
   - “Thank you” confirmation after submit
 - **Blog & Comments**  
-  Visitors can post comments (display name only; emails kept private)
+  Visitors can post comments.
 
 ---
 
