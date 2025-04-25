@@ -4,10 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 
 interface Params {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
-export default async function PostPage({ params }: Params) {
+export default async function PostPage(props: Params) {
+  const params = await props.params;
   // 1) Load all posts from your JSON store
   const posts = await readPosts();
   const post = posts.find((p) => p.id === params.id);
