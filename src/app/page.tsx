@@ -17,7 +17,7 @@ export default function HomePage() {
           <DogProfile
             name="Cashmere"
             imageSrc="/images/cash2.JPG"
-            description="Meet Cashmere, our cherished three-year-old “dam” and proud AKC-registered Pomeranian. At a petite eight pounds, she sports a mismarked black coat — a trait she inherited from her mother, a fellow black Pomeranian born and raised right here in St. Louis, Missouri. Her father, an orange Pomeranian also from St. Louis, rounds out her pedigree.
+            description="Meet Cashmere, our cherished three-year-old dam and proud AKC-registered Pomeranian. At a petite eight pounds, she sports a mismarked black coat — a trait she inherited from her mother, a fellow black Pomeranian born and raised right here in St. Louis, Missouri. Her father, an orange Pomeranian also from St. Louis, rounds out her pedigree.
             Cashmere is the perfect blend of smart and spirited. She’s obedient and eager to please — especially when treats are involved. Whether she’s tackling a brisk walk, dominating a game of tug-of-war, or showing off her surprisingly graceful swimming skills, she does it all with boundless energy and enthusiasm."
             reverse={false}
           />

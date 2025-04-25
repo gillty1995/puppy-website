@@ -24,7 +24,7 @@ export default function AboutPage() {
         {/* Content */}
         <div className="space-y-6 text-gray-700">
           <p>
-            Cashmere, our beloved dame, joined our family three years ago —
+            Cashmere, our beloved dam, joined our family three years ago —
             marking the start of this wonderful journey. A year later, Corduroy,
             our affectionate sire, became part of our home after spending his
             first eight weeks in Tennessee with his purebred orange Pomeranian
