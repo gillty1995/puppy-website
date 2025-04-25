@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 interface Post {
   id: string;
@@ -53,10 +54,12 @@ export default function BlogPage() {
                 </h2>
 
                 {imgs.map((src) => (
-                  <img
+                  <Image
                     key={src}
                     src={src}
                     alt={p.title}
+                    width={400}
+                    height={580}
                     className="w-full h-48 object-cover rounded mb-4"
                   />
                 ))}

@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy": "npm run build && rsync -avz -e \"ssh -i /Users/gooee/Desktop/AWS/awskey.pem\" --exclude 'node_modules' --exclude '.git' ./ ubuntu@3.139.240.156:~/textilepoms && ssh -i /Users/gooee/Desktop/AWS/awskey.pem ubuntu@3.139.240.156 \"cd ~/textilepoms && npm install --production && pm2 restart textilepoms || pm2 start npm --name textilepoms -- run start\""
   },
   "dependencies": {
     "formidable": "^3.5.3",

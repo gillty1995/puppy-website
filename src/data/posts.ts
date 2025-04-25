@@ -21,9 +21,11 @@ export async function readPosts(): Promise<Post[]> {
   try {
     const raw = await fs.readFile(filePath, "utf-8");
     return JSON.parse(raw);
-  } catch (err: any) {
-    if (err.code === "ENOENT") {
-      // first run: create the file
+  } catch (err) {
+    // cast to the built-in ErrnoException
+    const e = err as NodeJS.ErrnoException;
+    if (e.code === "ENOENT") {
+      // first run: create file
       await fs.writeFile(filePath, "[]");
       return [];
     }

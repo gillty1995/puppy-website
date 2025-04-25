@@ -1,12 +1,14 @@
-import { readPosts, Post } from "@/data/posts";
+import { readPosts } from "@/data/posts";
 import CommentsSection from "@/components/CommentSection";
 import Link from "next/link";
+import Image from "next/image";
 
 interface Params {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
-export default async function PostPage({ params }: Params) {
+export default async function PostPage(props: Params) {
+  const params = await props.params;
   // 1) Load all posts from your JSON store
   const posts = await readPosts();
   const post = posts.find((p) => p.id === params.id);
@@ -42,10 +44,12 @@ export default async function PostPage({ params }: Params) {
 
         <div className="space-y-6">
           {post.images.map((src) => (
-            <img
+            <Image
               key={src}
               src={src}
               alt={post.title}
+              width={400}
+              height={580}
               className="w-full object-cover rounded-lg"
             />
           ))}

@@ -5,11 +5,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { puppies, Puppy } from "@/utils/PuppyData";
 
-export default async function PuppyPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default async function PuppyPage(
+  props: {
+    params: Promise<{ id: string }>;
+  }
+) {
+  const params = await props.params;
   const puppy: Puppy | undefined = puppies.find((p) => p.id === params.id);
   if (!puppy) {
     notFound();

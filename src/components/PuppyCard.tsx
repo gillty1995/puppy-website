@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 
 interface PuppyCardProps {
@@ -19,9 +20,11 @@ export default function PuppyCard({ id, name, image, price }: PuppyCardProps) {
           whileHover={{ scale: 1.02 }}
           transition={{ type: "spring", stiffness: 300 }}
         >
-          <img
+          <Image
             src={image}
             alt={name}
+            width={400}
+            height={580}
             className="w-full h-[580px] object-cover"
           />
 

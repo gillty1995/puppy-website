@@ -1,13 +1,14 @@
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
 import { readPosts, writePosts } from "@/data/posts";
 
 export async function DELETE(
-  _request: NextRequest,
-  { params }: { params: { id: string } }
+  request: Request,                                    
+  { params }: { params: Promise<{ id: string }> }   
 ) {
+  const { id } = await params;
+
   const posts = await readPosts();
-  const filtered = posts.filter((p) => p.id !== params.id);
+  const filtered = posts.filter((p) => p.id !== id);
   await writePosts(filtered);
   return NextResponse.json({ success: true });
 }
