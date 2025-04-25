@@ -12,9 +12,21 @@ export default function Footer() {
 
   return (
     <footer className="py-8 bg-zinc-900 text-gray-300">
-      <div className="container mx-auto flex items-center justify-between">
+      <div
+        className="
+          container mx-auto         
+          sm:px-6        
+          flex flex-col items-center space-y-6
+          md:flex-row md:justify-between md:space-y-0
+        "
+      >
         {/* Left side: site info */}
-        <div className="flex items-center space-x-3">
+        <div
+          className="
+            flex flex-col items-center space-y-2 text-center 
+            md:flex-row md:items-center md:space-y-0 md:space-x-3 md:text-left
+          "
+        >
           <p className="whitespace-nowrap">
             &copy; {new Date().getFullYear()} Textile Poms. All rights reserved.
           </p>

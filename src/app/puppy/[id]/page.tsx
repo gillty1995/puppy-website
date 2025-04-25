@@ -53,16 +53,16 @@ export default async function PuppyPage({
           </div>
 
           {/* Action buttons */}
-          <div className="mt-8 flex space-x-4">
+          <div className="mt-8 flex space-x-4 max-sm:justify-center">
             <Link
               href="/care"
-              className="cursor-pointer px-25 py-2 bg-emerald-600 text-white font-medium rounded-full hover:bg-emerald-500 delay-100 ease-in-out transition text-xl"
+              className="cursor-pointer max-sm:px-13 max-[1025px]:px-20 px-25 py-2 bg-emerald-600 text-white font-medium rounded-full hover:bg-emerald-500 delay-100 ease-in-out transition text-xl"
             >
               Care
             </Link>
             <Link
               href="/#contact"
-              className="cursor-pointer px-25 py-2 bg-emerald-600 text-white font-medium rounded-full hover:bg-emerald-500 delay-100 ease-in-out transition text-xl"
+              className="cursor-pointer max-sm:px-13 max-[1025px]:px-20 px-25 py-2 bg-emerald-600 text-white font-medium rounded-full hover:bg-emerald-500 delay-100 ease-in-out transition text-xl"
             >
               Adopt
             </Link>
