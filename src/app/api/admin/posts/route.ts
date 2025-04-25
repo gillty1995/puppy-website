@@ -52,6 +52,7 @@ export async function POST(request: NextRequest) {
     title,
     body,
     images: imageUrls,
+    comments: []
   };
   posts.unshift(newPost);
   await writePosts(posts);
