@@ -1,13 +1,10 @@
 import Hero from "../components/Hero";
 import DogProfile from "../components/DogProfile";
-import PuppyCard from "../components/PuppyCard";
 import CareSection from "../components/CareSection";
 import ContactForm from "../components/ContactForm";
 import Footer from "../components/Footer";
 import Header from "@/components/Header";
 import PuppyGallery from "@/components/PuppyGallery";
-
-import { puppies } from "@/utils/PuppyData";
 
 export default function HomePage() {
   return (

@@ -18,7 +18,7 @@ async function ensureUploadsDir(): Promise<string> {
 }
 
 // GET /api/admin/posts → list all posts
-export async function GET(_: NextRequest) {
+export async function GET() {
   const posts = await readPosts();
   return NextResponse.json(posts);
 }
@@ -52,6 +52,7 @@ export async function POST(request: NextRequest) {
     title,
     body,
     images: imageUrls,
+    comments: []
   };
   posts.unshift(newPost);
   await writePosts(posts);

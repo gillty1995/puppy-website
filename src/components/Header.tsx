@@ -7,7 +7,7 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import { useCallback, useState, useEffect } from "react";
+import { useCallback, useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { useAdmin } from "@/app/context/AdminContext";
 

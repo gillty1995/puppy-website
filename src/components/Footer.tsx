@@ -2,7 +2,7 @@
 "use client";
 
 import { useState } from "react";
-import { FaLinkedin, FaGithub } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
 import LoginModal from "./LoginModal";
 import { useAdmin } from "@/app/context/AdminContext";
 

@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 interface Post {
   id: string;
@@ -105,9 +106,11 @@ export default function AdminBlogPage() {
             {imageFiles.length > 0 && (
               <div className="flex space-x-4 overflow-x-auto mt-4">
                 {imageFiles.map((f) => (
-                  <img
+                  <Image
                     key={f.name + f.size}
                     src={URL.createObjectURL(f)}
+                    width={400}
+                    height={580}
                     alt="preview"
                     className="h-32 object-cover rounded-lg"
                   />
@@ -146,10 +149,12 @@ export default function AdminBlogPage() {
 
               <div className="flex space-x-4 overflow-x-auto">
                 {p.images.map((src) => (
-                  <img
+                  <Image
                     key={src}
                     src={src}
                     alt={p.title}
+                    width={400}
+                    height={580}
                     className="h-32 object-cover rounded"
                   />
                 ))}

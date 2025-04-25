@@ -1,6 +1,7 @@
-import { readPosts, Post } from "@/data/posts";
+import { readPosts } from "@/data/posts";
 import CommentsSection from "@/components/CommentSection";
 import Link from "next/link";
+import Image from "next/image";
 
 interface Params {
   params: { id: string };
@@ -42,10 +43,12 @@ export default async function PostPage({ params }: Params) {
 
         <div className="space-y-6">
           {post.images.map((src) => (
-            <img
+            <Image
               key={src}
               src={src}
               alt={post.title}
+              width={400}
+              height={580}
               className="w-full object-cover rounded-lg"
             />
           ))}
