@@ -20,12 +20,7 @@ export default function Hero() {
           alt="Mother and Father Pomeranian"
           fill
           priority
-          className="
-            object-cover
-            object-center         /* mobile: center both axes */
-            sm:object-[50%_%-20%] /* small tablets: shift up a bit */
-            md:object-[50%_%-80%] /* large tablets: more upward crop */
-            lg:object-[50%_-120%] /* desktop: original focus */
+          className="object-cover object-top pt-50 max-md:pt-0 max-sm:object-[30%_30%] [@media(min-width:768px)_and_(max-width:768px)]:pt-0
           "
         />
         <div className="absolute inset-0 bg-black/30" />

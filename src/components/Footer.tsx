@@ -2,7 +2,6 @@
 "use client";
 
 import { useState } from "react";
-import { FaGithub } from "react-icons/fa";
 import LoginModal from "./LoginModal";
 import { useAdmin } from "@/app/context/AdminContext";
 
@@ -37,14 +36,6 @@ export default function Footer() {
             className="hover:underline"
           >
             Created by Gill Hermelin
-          </a>
-          <a
-            href="https://github.com/gillty1995/puppy-website"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-white"
-          >
-            <FaGithub size={20} />
           </a>
         </div>
 
