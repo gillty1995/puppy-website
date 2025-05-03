@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import StaticImg from "@/components/StaticImg";
 
 interface Post {
   id: string;
@@ -53,16 +53,19 @@ export default function BlogPage() {
                   {p.title}
                 </h2>
 
-                {imgs.map((src) => (
-                  <Image
-                    key={src}
-                    src={src}
-                    alt={p.title}
-                    width={400}
-                    height={580}
-                    className="w-full h-48 object-cover rounded mb-4"
-                  />
-                ))}
+                {imgs.map((src) => {
+                  const filename = src.replace(/^\/uploads\//, "");
+                  return (
+                    <StaticImg
+                      key={src}
+                      src={`/api/uploads/${filename}`}
+                      alt={p.title}
+                      width={400}
+                      height={580}
+                      className="w-full h-48 object-cover rounded mb-4"
+                    />
+                  );
+                })}
 
                 <p className="text-gray-700">
                   {p.body.length > 150

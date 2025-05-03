@@ -16,11 +16,11 @@ export default function Hero() {
       {/* Background image of both dogs */}
       <div className="absolute inset-0 -z-10">
         <Image
-          src="/images/both4.jpg"
+          src="/images/both4.JPG"
           alt="Mother and Father Pomeranian"
           fill
           priority
-          className="object-cover object-top pt-50 max-md:pt-0 max-sm:object-[30%_30%] [@media(min-width:768px)_and_(max-width:768px)]:pt-0
+          className="object-cover object-top pt-50 max-md:pt-0 max-sm:object-[35%_30%] max-sm:pt-10 [@media(min-width:768px)_and_(max-width:768px)]:pt-0
           "
         />
         <div className="absolute inset-0 bg-black/30" />
