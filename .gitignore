@@ -45,3 +45,6 @@ next-env.d.ts
 /public/uploads/*
 # except the .gitkeep so folder stays in repo
 !/public/uploads/.gitkeep
+
+# ignore all committed posts data
+/src/data/posts.json

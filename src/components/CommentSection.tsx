@@ -8,6 +8,13 @@ interface Comment {
   createdAt: string;
 }
 
+// mask emails
+function maskEmail(email: string): string {
+  const [local, domain] = email.split("@");
+  if (!domain) return email;
+  return `${"*".repeat(local.length)}@${domain}`;
+}
+
 export default function CommentsSection({ postId }: { postId: string }) {
   const [isHover, setIsHover] = useState(false);
   const [comments, setComments] = useState<Comment[]>([]);
@@ -55,7 +62,7 @@ export default function CommentsSection({ postId }: { postId: string }) {
         {comments.map((c) => (
           <div key={c.createdAt} className="p-4 bg-gray-100 rounded">
             <p className="text-sm text-gray-600">
-              {c.email} • {new Date(c.createdAt).toLocaleString()}
+              {maskEmail(c.email)} • {new Date(c.createdAt).toLocaleString()}
             </p>
             <p className="text-gray-800">{c.comment}</p>
           </div>
