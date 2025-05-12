@@ -5,11 +5,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { puppies, Puppy } from "@/utils/PuppyData";
 
-export default async function PuppyPage(
-  props: {
-    params: Promise<{ id: string }>;
-  }
-) {
+export default async function PuppyPage(props: {
+  params: Promise<{ id: string }>;
+}) {
   const params = await props.params;
   const puppy: Puppy | undefined = puppies.find((p) => p.id === params.id);
   if (!puppy) {
@@ -43,7 +41,7 @@ export default async function PuppyPage(
           </p>
           <div className="mt-6 space-y-2 text-lg text-gray-800">
             <p>
-              <strong>Age:</strong> {puppy.age}
+              <strong>Date of Birth:</strong> {puppy.age}
             </p>
             <p>
               <strong>Color:</strong> {puppy.color}
