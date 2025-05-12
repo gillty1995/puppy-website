@@ -36,3 +36,5 @@ export async function readPosts(): Promise<Post[]> {
 export async function writePosts(posts: Post[]): Promise<void> {
   await fs.writeFile(filePath, JSON.stringify(posts, null, 2));
 }
+
+export const getAllPosts = readPosts;

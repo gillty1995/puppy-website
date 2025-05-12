@@ -7,6 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "sync-posts": "NODE_ENV=production node scripts/sync-posts.js",
+    "sync-images": "rsync -avz -e \"ssh -i /Users/gooee/Desktop/AWS/awskey.pem\" ubuntu@3.139.240.156:~/textilepoms/public/uploads/ ./public/uploads",
+    "sync-all": "npm run sync-posts && npm run sync-images",
     "deploy": "npm run build && rsync -avz -e \"ssh -i /Users/gooee/Desktop/AWS/awskey.pem\" --exclude 'node_modules' --exclude '.git' ./ ubuntu@3.139.240.156:~/textilepoms && ssh -i /Users/gooee/Desktop/AWS/awskey.pem ubuntu@3.139.240.156 \"cd ~/textilepoms && npm install --production && pm2 restart textilepoms || pm2 start npm --name textilepoms -- run start\""
   },
   "dependencies": {

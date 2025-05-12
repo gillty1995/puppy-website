@@ -1,8 +1,8 @@
 // app/api/posts/route.ts
 import { NextResponse } from "next/server";
-import { readPosts } from "@/data/posts";
+import { getAllPosts } from "@/data/posts";
 
 export async function GET() {
-  const posts = await readPosts();
+  const posts = await getAllPosts();
   return NextResponse.json(posts);
 }
