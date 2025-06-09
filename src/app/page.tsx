@@ -13,7 +13,7 @@ export default function HomePage() {
       <Hero />
       <section id="parents">
         {/* Cashmere (mom) */}
-        <div className="bg-zinc-900 py-16">
+        <h1 className="bg-zinc-900 py-16">
           <DogProfile
             name="Cashmere"
             imageSrc="/images/cash2.JPG"
@@ -21,10 +21,10 @@ export default function HomePage() {
             Cashmere is the perfect blend of smart and spirited. She’s obedient and eager to please — especially when treats are involved. Whether she’s tackling a brisk walk, dominating a game of tug-of-war, or showing off her surprisingly graceful swimming skills, she does it all with boundless energy and enthusiasm."
             reverse={false}
           />
-        </div>
+        </h1>
 
         {/* Corduroy (dad) */}
-        <div className="bg-zinc-800 py-16 ">
+        <h2 className="bg-zinc-800 py-16 ">
           <DogProfile
             name="Corduroy"
             imageSrc="/images/cord6.JPG"
@@ -33,7 +33,7 @@ export default function HomePage() {
             Corduroy is the very definition of a lap dog — nothing makes him happier than a good belly rub. When he’s not curled up in your arms or dozing in a sunny spot, you’ll find him bounding along hiking trails or gleefully chasing down balls in spirited games of fetch."
             reverse={true}
           />
-        </div>
+        </h2>
       </section>
       <PuppyGallery />
       <CareSection />

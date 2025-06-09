@@ -15,6 +15,7 @@ export const metadata = {
     "Pomeranian breeder",
     "St. Louis puppies",
     "Textile Poms",
+    "St. Louis",
   ].join(", "),
   openGraph: {
     title: "Textile Poms • AKC Pomeranian Puppies in St. Louis",

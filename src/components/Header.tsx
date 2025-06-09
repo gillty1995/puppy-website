@@ -156,7 +156,7 @@ export default function Header() {
           >
             Find Your Perfect Pomeranian
           </motion.h1>
-          <motion.p
+          <motion.h2
             className="petite-formal mt-4 text-lg md:text-xl text-gray-700"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -164,7 +164,7 @@ export default function Header() {
           >
             Healthy, happy puppies raised with love — ready for their forever
             homes.
-          </motion.p>
+          </motion.h2>
         </motion.div>
       </div>
     </motion.header>
