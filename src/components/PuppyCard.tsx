@@ -38,6 +38,7 @@ export default function PuppyCard({ id, name, image, price }: PuppyCardProps) {
                   origin-bottom scale-y-0 
                   group-hover:scale-y-100 
                   transition-transform duration-300 ease-in-out
+                  max-sm:bg-white max-sm:scale-y-100
                 "
               />
               {/* the price text sits above the fill */}

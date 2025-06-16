@@ -52,18 +52,30 @@ export default async function PuppyPage(props: {
           </div>
 
           {/* Action buttons */}
-          <div className="mt-8 flex space-x-4 max-sm:justify-center">
+          <div className="mt-8 flex flex-wrap gap-4 max-w-[600px] max-sm:justify-center">
             <Link
               href="/care"
-              className="cursor-pointer max-sm:px-13 max-[1025px]:px-20 px-25 py-2 bg-emerald-600 text-white font-medium rounded-full hover:bg-emerald-500 delay-100 ease-in-out transition text-xl"
+              className="px-6 py-3 w-52 h-12 bg-emerald-600 text-white font-medium rounded-full hover:bg-emerald-500 transition text-xl flex items-center justify-center"
             >
               Care
             </Link>
             <Link
               href="/#contact"
-              className="cursor-pointer max-sm:px-13 max-[1025px]:px-20 px-25 py-2 bg-emerald-600 text-white font-medium rounded-full hover:bg-emerald-500 delay-100 ease-in-out transition text-xl"
+              className="px-6 py-3 w-52 h-12 bg-emerald-600 text-white font-medium rounded-full hover:bg-emerald-500 transition text-xl flex items-center justify-center"
             >
               Adopt
+            </Link>
+            <Link
+              href="/blog"
+              className="px-6 py-3 w-52 h-12 bg-emerald-600 text-white font-medium rounded-full hover:bg-emerald-500 transition text-xl flex items-center justify-center"
+            >
+              Blog
+            </Link>
+            <Link
+              href="/faq"
+              className="px-6 py-3 w-52 h-12 bg-emerald-600 text-white font-medium rounded-full hover:bg-emerald-500 transition text-xl flex items-center justify-center"
+            >
+              FAQ
             </Link>
           </div>
         </div>

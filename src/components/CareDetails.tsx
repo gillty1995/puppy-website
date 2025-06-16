@@ -68,10 +68,10 @@ export default function CareDetails() {
               Puppy Diet
             </h3>
             <p className="text-gray-700">
-              All of our puppies eat Purina ONE Healthy Puppy Formula. After
-              adoption, keep them on this diet or gradually transition to a new
-              food over 5–7 days — slowly mix increasing amounts of the new
-              kibble to prevent tummy upset.
+              All of our puppies eat Blue Buffalo - baby BLUE Healthy Growth
+              Formula Puppy Wet Food. After adoption, keep them on this diet or
+              gradually transition to a new food over 5–7 days — slowly mix
+              increasing amounts of the new kibble to prevent tummy upset.
             </p>
           </div>
 
@@ -130,8 +130,8 @@ export default function CareDetails() {
               Spay & Neuter
             </h3>
             <p className="text-gray-700">
-              Each puppy is spayed or neutered before adoption to ensure a
-              healthy start and help control the pet population.
+              Puppy’s will be expected to be spayed or neutered between 6 to 9
+              months of age by their new owners.
             </p>
             <h3 className="mt-4 text-xl font-semibold text-gray-900">
               Microchipping

@@ -30,7 +30,7 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} Textile Poms. All rights reserved.
           </p>
           <a
-            href="https://gillhermelin.hec.to/"
+            href="https://gillhermelin.com/"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:underline"

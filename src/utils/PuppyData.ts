@@ -12,7 +12,7 @@ export interface Puppy {
     {
       id: "puppy1",
       name: "Cotton",
-      image: "/images/cotton.jpeg",
+      image: "/images/cotton-6wks.jpeg",
       price: 2500,
       age: "May 1st, 2025",
       color: "White",
@@ -21,7 +21,7 @@ export interface Puppy {
     {
       id: "puppy2",
       name: "Canvas",
-      image: "/images/canvas.jpeg",
+      image: "/images/canvas-6wks2.jpeg",
       price: 2500,
       age: "May 1st, 2025",
       color: "Black and White, Parti-Pom",

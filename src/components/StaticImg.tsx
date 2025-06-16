@@ -7,5 +7,7 @@ const passthroughLoader: ImageLoader = ({ src }) => src;
 export default function StaticImg(
   props: Omit<React.ComponentProps<typeof Image>, "loader">
 ) {
-  return <Image {...props} loader={passthroughLoader} unoptimized />;
+  return (
+    <Image {...props} alt="image" loader={passthroughLoader} unoptimized />
+  );
 }

@@ -24,7 +24,8 @@ export default function PrivacyPolicyPage() {
         <li>Any message content you choose to share</li>
         <li>
           Any comments you post on our blog (including the display name you
-          enter) are publicly visible
+          enter). You&rsquo;re email will not be visible to the public and will
+          be safely covered by our security methods.
         </li>
       </ul>
 
