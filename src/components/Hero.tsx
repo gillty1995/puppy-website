@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-
+import BlurDataURL from "@/utils/hero-blur";
 export default function Hero() {
   return (
     <section
@@ -18,6 +18,8 @@ export default function Hero() {
         <Image
           src="/images/both4.JPG"
           alt="Mother and Father Pomeranian"
+          placeholder="blur"
+          blurDataURL={BlurDataURL}
           fill
           priority
           className="object-cover object-top pt-50 max-md:pt-0 max-sm:object-[35%_30%] max-sm:pt-10 [@media(min-width:768px)_and_(max-width:768px)]:pt-0

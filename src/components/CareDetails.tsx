@@ -130,16 +130,15 @@ export default function CareDetails() {
               Spay & Neuter
             </h3>
             <p className="text-gray-700">
-              Puppy’s will be expected to be spayed or neutered between 6 to 9
+              Puppies will be expected to be spayed or neutered between 6 to 9
               months of age by their new owners.
             </p>
             <h3 className="mt-4 text-xl font-semibold text-gray-900">
               Microchipping
             </h3>
             <p className="text-gray-700">
-              Cashmere and Corduroy are microchipped, and all puppies are
-              chipped prior to adoption. Please update the chip with your
-              contact info after adoption.
+              Cashmere and Corduroy are both microchipped. We ask that you
+              microchip your puppy with your contact info after adoption.
             </p>
             <h3 className="mt-4 text-xl font-semibold text-gray-900">
               AKC Registration

@@ -42,9 +42,9 @@ export default function FAQPage() {
             </h2>
             <p>
               Yes — placing a $500 deposit will reserve your chosen puppy. This
-              non-refundable deposit secures your puppy but is not applied
-              toward the total adoption fee. If a puppy is on the website it is
-              still available!
+              non-refundable deposit secures your puppy and is applied toward
+              the total adoption fee. If a puppy is on the website it is still
+              available!
             </p>
           </div>
 
@@ -55,9 +55,9 @@ export default function FAQPage() {
               What is included in the adoption package?
             </h2>
             <p>
-              Every puppy comes with up-to-date vaccinations, a microchip, a
-              sample can of the food they&rsquo;re used to, and a puppy care
-              guide. We also include their AKC paperwork.
+              Every puppy comes with up-to-date vaccinations and a sample can of
+              the food they&rsquo;re used to. We also include their AKC
+              paperwork.
             </p>
           </div>
 
@@ -81,9 +81,10 @@ export default function FAQPage() {
               What are the shipping or pickup options?
             </h2>
             <p>
-              Local pickup is available in St. Louis, MO. If you’re out of
-              state, just get in touch and we can work out a drop-off fee and
-              deposit to have your puppy personally delivered.
+              Local pickup in St. Louis, MO is free; for deliveries outside our
+              local area, we require a nonrefundable delivery fee calculated by
+              distance, paid in advance to secure your delivery. Please contact
+              us for a personalized quote.
             </p>
           </div>
 
@@ -94,9 +95,9 @@ export default function FAQPage() {
               How much do your Pomeranian puppies cost?
             </h2>
             <p>
-              Our puppies range from $2,500 to $3,500 depending on coat color,
-              markings, and sex. The reservation deposit of $500 is not applied
-              to the final fee.
+              Our puppies range from $1,000 to $3,500 depending on coat color,
+              markings, and sex. If you apply for the reservation deposit of
+              $500, it will be applied to the final fee.
             </p>
           </div>
         </div>

@@ -49,6 +49,9 @@ export default async function PuppyPage(props: {
             <p>
               <strong>Description:</strong> {puppy.description}
             </p>
+            <p>
+              <strong>Skills:</strong> {puppy.skills}
+            </p>
           </div>
 
           {/* Action buttons */}
