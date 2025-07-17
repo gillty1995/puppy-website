@@ -48,3 +48,6 @@ next-env.d.ts
 
 # ignore all committed posts data
 /src/data/posts.json
+
+# ignore scripts folder
+/scripts/
