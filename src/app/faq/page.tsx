@@ -56,8 +56,7 @@ export default function FAQPage() {
             </h2>
             <p>
               Every puppy comes with up-to-date vaccinations and a sample can of
-              the food they&rsquo;re used to. We also include their AKC
-              paperwork.
+              the food they&rsquo;re used to.
             </p>
           </div>
 

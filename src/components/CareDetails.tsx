@@ -140,13 +140,13 @@ export default function CareDetails() {
               Cashmere and Corduroy are both microchipped. We ask that you
               microchip your puppy with your contact info after adoption.
             </p>
-            <h3 className="mt-4 text-xl font-semibold text-gray-900">
+            {/* <h3 className="mt-4 text-xl font-semibold text-gray-900">
               AKC Registration
             </h3>
             <p className="text-gray-700">
               All of our dogs are AKC registered. Your puppy’s registration
               paperwork will be provided when you bring them home.
-            </p>
+            </p> */}
           </div>
         </div>
       </div>

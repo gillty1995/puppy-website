@@ -37,7 +37,9 @@ export default async function PuppyPage(props: {
             {puppy.name}
           </h1>
           <p className="mt-4 text-2xl text-gray-700">
-            ${puppy.price.toLocaleString()} USD
+            {puppy.price === "SOLD"
+              ? "SOLD"
+              : `$${Number(puppy.price).toLocaleString()} USD`}
           </p>
           <div className="mt-6 space-y-2 text-lg text-gray-800">
             <p>

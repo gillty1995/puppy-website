@@ -7,7 +7,7 @@ interface PuppyCardProps {
   id: string;
   name: string;
   image: string;
-  price: number;
+  price: number | string;
 }
 
 export default function PuppyCard({ id, name, image, price }: PuppyCardProps) {
@@ -42,7 +42,11 @@ export default function PuppyCard({ id, name, image, price }: PuppyCardProps) {
                 "
               />
               {/* the price text sits above the fill */}
-              <span className="relative">${price.toFixed(2)}</span>
+              <span className="relative">
+                {typeof price === "number"
+                  ? `$${price.toFixed(2)}`
+                  : `${price}`}
+              </span>
             </span>
           </div>
         </motion.div>

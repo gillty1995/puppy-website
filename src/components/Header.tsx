@@ -74,6 +74,11 @@ export default function Header() {
               </a>
             </li>
             <li>
+              <a href="/adoptions" className="hover:underline">
+                Adoptions
+              </a>
+            </li>
+            <li>
               <a href="/about" className="hover:underline">
                 About
               </a>
@@ -123,6 +128,15 @@ export default function Header() {
                     className="block text-lg hover:underline"
                   >
                     Blog
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/adoptions"
+                    onClick={() => setMenuOpen(false)}
+                    className="block text-lg hover:underline"
+                  >
+                    Adoptions
                   </a>
                 </li>
                 <li>

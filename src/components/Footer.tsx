@@ -39,22 +39,32 @@ export default function Footer() {
           </a>
         </div>
 
-        {/* Right side: admin / logout */}
-        {!isAdmin ? (
-          <button
-            onClick={() => setShowLogin(true)}
-            className="px-3 py-1 border border-blue-400 rounded text-blue-400 hover:bg-blue-500 hover:text-white transition"
-          >
-            Admin
-          </button>
-        ) : (
-          <button
-            onClick={logout}
-            className="px-3 py-1 border border-red-400 rounded text-red-400 hover:bg-red-500 hover:text-white transition"
-          >
-            Log Out
-          </button>
-        )}
+        {/* Right side: admin / logout / admin reviews */}
+        <div className="flex items-center space-x-4">
+          {!isAdmin ? (
+            <button
+              onClick={() => setShowLogin(true)}
+              className="px-3 py-1 border border-blue-400 rounded text-blue-400 hover:bg-blue-500 hover:text-white transition"
+            >
+              Admin
+            </button>
+          ) : (
+            <>
+              <a
+                href="/admin/reviews"
+                className="px-3 py-1 border border-emerald-400 rounded text-emerald-400 hover:bg-emerald-500 hover:text-white transition"
+              >
+                Admin Reviews
+              </a>
+              <button
+                onClick={logout}
+                className="px-3 py-1 border border-red-400 rounded text-red-400 hover:bg-red-500 hover:text-white transition"
+              >
+                Log Out
+              </button>
+            </>
+          )}
+        </div>
       </div>
 
       {/* Login modal */}
