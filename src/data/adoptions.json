@@ -4,5 +4,11 @@
     "details": "Cotton with his new family!",
     "photo": "/images/adoption1.jpeg",
     "reviews": []
+  },
+  {
+    "id": "2",
+    "details": "Canvas with his new family!",
+    "photo": "/images/adoption2.jpeg",
+    "reviews": []
   }
 ]
