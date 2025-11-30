@@ -4,23 +4,23 @@ import { AdminProvider } from "./context/AdminContext";
 import StructuredData from "@/components/StructuredData";
 
 export const metadata = {
-  title: "Textile Poms • AKC Pomeranian Puppies in St. Louis",
+  title: "Textile Poms • Purebred Pomeranian Puppies in St. Louis",
   description:
-    "Textile Poms offers healthy, AKC-registered Pomeranian puppies born and raised in St. Louis. Inquire today!",
+    "Textile Poms offers healthy, purebred Pomeranian puppies born and raised in St. Louis. Inquire today!",
   keywords: [
     "Pomeranian",
     "Pomeranians",
     "Pomeranian puppies",
-    "AKC Pomeranian",
+    "Purebred Pomeranian",
     "Pomeranian breeder",
     "St. Louis puppies",
     "Textile Poms",
     "St. Louis",
   ].join(", "),
   openGraph: {
-    title: "Textile Poms • AKC Pomeranian Puppies in St. Louis",
+    title: "Textile Poms • Purebred Pomeranian Puppies in St. Louis",
     description:
-      "Healthy, AKC-registered Pomeranian puppies born and raised in St. Louis. Litter due soon!",
+      "Healthy, purebred Pomeranian puppies born and raised in St. Louis. Litter due soon!",
     url: "https://textilepoms.com",
     siteName: "Textile Poms",
     images: [

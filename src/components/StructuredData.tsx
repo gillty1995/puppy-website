@@ -21,7 +21,7 @@ export default function StructuredData() {
     telephone: NEXT_PUBLIC_PHONE,
     priceRange: "$$$",
     description:
-      "Licensed AKC Pomeranian breeder in St. Louis. Puppies available soon!",
+      "Purebred Pomeranian breeder in St. Louis. Puppies available soon!",
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",
