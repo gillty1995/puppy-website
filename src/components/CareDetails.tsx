@@ -48,8 +48,9 @@ export default function CareDetails() {
             <p className="text-gray-700">
               While puppies leave our care at eight weeks, we brush and bathe
               them as needed. We recommend starting formal grooming at 12–16
-              weeks, once they’ve had their second vaccinations — this builds
-              positive associations and helps them adapt to the process.
+              weeks, once they’re up to date on all their age appropriate
+              vaccinations — this builds positive associations and helps them
+              adapt to the process.
             </p>
           </div>
 
@@ -117,14 +118,20 @@ export default function CareDetails() {
             </h2>
             <p className="text-gray-700">
               Preventative checkups catch issues early. We take all our dogs to
-              Rock Road Animal Hospital in St. Louis for regular exams.
+              Rock Road Animal Hospital in St. Louis for regular exams. Our
+              puppies will recieve any necessay veternary care while in our home
+              to ensure they are in perfect health prior to their adoption.
+              Adopters may request a full health check prior to their puppies
+              adoption at their expense.
             </p>
             <h3 className="mt-4 text-xl font-semibold text-gray-900">
               Vaccinations
             </h3>
             <p className="text-gray-700">
-              Puppies leave us with all age-appropriate shots complete, and
-              their full vaccine record comes home with you.
+              Prior to adoption our puppies remain at home in a controlled
+              sanitary environment. After adoption each puppy will be expected
+              to receive all age-appropriate vaccinations and veterinary care at
+              the expense of their adopted family.
             </p>
             <h3 className="mt-4 text-xl font-semibold text-gray-900">
               Spay & Neuter

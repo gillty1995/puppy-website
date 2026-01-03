@@ -28,6 +28,17 @@ export default function AdminAdoptionReviewsPage() {
     setPending(pending.filter((_, i) => i !== index));
   }
 
+  async function deleteReview(index: number) {
+    const ok = window.confirm("Delete this review permanently?");
+    if (!ok) return;
+    await fetch("/api/adoptions/review/delete", {
+      method: "POST",
+      body: JSON.stringify({ index }),
+      headers: { "Content-Type": "application/json" },
+    });
+    setPending(pending.filter((_, i) => i !== index));
+  }
+
   return (
     <section className="py-16 px-6 md:px-20">
       <div className="max-w-2xl mx-auto bg-white p-8 rounded shadow">
@@ -54,6 +65,12 @@ export default function AdminAdoptionReviewsPage() {
                   onClick={() => acceptReview(i)}
                 >
                   Accept
+                </button>
+                <button
+                  className="mt-2 ml-2 px-4 py-2 bg-red-600 text-white rounded cursor-pointer hover:bg-red-500"
+                  onClick={() => deleteReview(i)}
+                >
+                  Delete
                 </button>
               </li>
             ))}

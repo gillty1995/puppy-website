@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import StaticImg from "@/components/StaticImg";
+import Lightbox from "@/components/Lightbox";
 
 interface Post {
   id: string;
@@ -35,7 +36,7 @@ export default function BlogPage() {
           Puppy Blog
         </h1>
 
-        <div className="grid gap-8">
+        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {posts.map((p) => {
             const imgs = p.images?.length
               ? p.images
@@ -43,39 +44,42 @@ export default function BlogPage() {
               ? [p.imageUrl]
               : [];
 
+            const thumbSrc = imgs.length
+              ? `/api/uploads/${imgs[0].replace(/^\/uploads\//, "")}`
+              : "/images/coming-soon.jpg";
+
             return (
               <Link
                 key={p.id}
                 href={`/blog/${p.id}`}
-                className="block bg-white rounded-lg shadow p-6 hover:shadow-lg transition"
+                className="block bg-white rounded-lg overflow-hidden shadow hover:shadow-lg transition-transform transform hover:scale-105"
               >
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                  {p.title}
-                </h2>
+                <div className="block w-full aspect-square bg-zinc-100 overflow-hidden pointer-events-none">
+                  <StaticImg
+                    src={thumbSrc}
+                    alt={p.title}
+                    width={600}
+                    height={600}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
 
-                {imgs.map((src) => {
-                  const filename = src.replace(/^\/uploads\//, "");
-                  return (
-                    <StaticImg
-                      key={src}
-                      src={`/api/uploads/${filename}`}
-                      alt={p.title}
-                      width={400}
-                      height={580}
-                      className="w-full h-48 object-cover rounded mb-4"
-                    />
-                  );
-                })}
-
-                <p className="text-gray-700">
-                  {p.body.length > 150
-                    ? p.body.slice(0, 150).trim() + "…"
-                    : p.body}
-                </p>
+                <div className="p-3">
+                  <h3 className="text-sm font-semibold text-gray-900 mb-2">
+                    {p.title}
+                  </h3>
+                  <p className="text-gray-700 text-sm">
+                    {p.body.length > 100
+                      ? p.body.slice(0, 100).trim() + "…"
+                      : p.body}
+                  </p>
+                </div>
               </Link>
             );
           })}
         </div>
+
+        <Lightbox />
       </div>
     </section>
   );

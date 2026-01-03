@@ -54,13 +54,19 @@ export default function Header() {
           <ul className="hidden md:flex space-x-8 text-sm font-medium text-gray-700">
             {["Home", "Parents", "Puppies", "Care", "Contact"].map((link) => (
               <li key={link}>
-                <a
-                  href={`#${link.toLowerCase()}`}
-                  onClick={(e) => handleNavClick(link, e)}
-                  className="hover:underline"
-                >
-                  {link}
-                </a>
+                {link === "Care" ? (
+                  <a href="/care" className="hover:underline">
+                    {link}
+                  </a>
+                ) : (
+                  <a
+                    href={`#${link.toLowerCase()}`}
+                    onClick={(e) => handleNavClick(link, e)}
+                    className="hover:underline"
+                  >
+                    {link}
+                  </a>
+                )}
               </li>
             ))}
           </ul>
@@ -108,16 +114,26 @@ export default function Header() {
                 {["Home", "Parents", "Puppies", "Care", "Contact"].map(
                   (link) => (
                     <li key={link}>
-                      <a
-                        href={`#${link.toLowerCase()}`}
-                        onClick={(e) => {
-                          handleNavClick(link, e);
-                          setMenuOpen(false);
-                        }}
-                        className="block text-lg hover:underline"
-                      >
-                        {link}
-                      </a>
+                      {link === "Care" ? (
+                        <a
+                          href="/care"
+                          onClick={() => setMenuOpen(false)}
+                          className="block text-lg hover:underline"
+                        >
+                          {link}
+                        </a>
+                      ) : (
+                        <a
+                          href={`#${link.toLowerCase()}`}
+                          onClick={(e) => {
+                            handleNavClick(link, e);
+                            setMenuOpen(false);
+                          }}
+                          className="block text-lg hover:underline"
+                        >
+                          {link}
+                        </a>
+                      )}
                     </li>
                   )
                 )}

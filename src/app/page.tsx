@@ -5,6 +5,7 @@ import ContactForm from "../components/ContactForm";
 import Footer from "../components/Footer";
 import Header from "@/components/Header";
 import PuppyGallery from "@/components/PuppyGallery";
+import Litters from "../components/Litters";
 
 export default function HomePage() {
   return (
@@ -36,6 +37,7 @@ export default function HomePage() {
         </h2>
       </section>
       <PuppyGallery />
+      <Litters />
       <CareSection />
       <ContactForm />
       <Footer />

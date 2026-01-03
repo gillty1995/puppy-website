@@ -19,11 +19,10 @@ export default function Footer() {
           md:flex-row md:justify-between md:space-y-0
         "
       >
-        {/* Left side: site info */}
         <div
           className="
-            flex flex-col items-center space-y-2 text-center 
-            md:flex-row md:items-center md:space-y-0 md:space-x-3 md:text-left
+            flex flex-col items-center space-y-2 text-center text-sm 
+            md:flex-row md:items-center md:space-y-0 md:space-x-1 md:text-left
           "
         >
           <p className="whitespace-nowrap">
@@ -35,11 +34,10 @@ export default function Footer() {
             rel="noopener noreferrer"
             className="hover:underline"
           >
-            Created by Gill Hermelin
+            Developed by Gill Hermelin
           </a>
         </div>
 
-        {/* Right side: admin / logout / admin reviews */}
         <div className="flex items-center space-x-4">
           {!isAdmin ? (
             <button

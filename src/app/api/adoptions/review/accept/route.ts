@@ -28,7 +28,6 @@ export async function POST(request: Request) {
   const adoptions: Adoption[] = JSON.parse(adoptionsRaw);
 
   const review = pending[index];
-  // Find the correct adoption by review.adoptionId
   const adoption = adoptions.find((a: Adoption) => a.id === review.adoptionId);
   if (adoption) {
     if (!adoption.reviews) adoption.reviews = [];
