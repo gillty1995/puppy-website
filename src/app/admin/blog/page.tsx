@@ -1,67 +1,34 @@
 "use client";
 
-import { useState, useEffect, ChangeEvent } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import StaticImg from "@/components/StaticImg";
-
-interface Post {
-  id: string;
-  title: string;
-  body: string;
-  images: string[];
-}
+import ImagePreviews from "@/components/ImagePreviews";
+import EditPostForm from "@/components/EditPostForm";
+import { useAdminPosts } from "@/hooks/useAdminPosts";
 
 export default function AdminBlogPage() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
-  const [posts, setPosts] = useState<Post[]>([]);
   const [isHover, setIsHover] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+  const {
+    posts,
+    fetchPosts,
+    createPost,
+    updatePost,
+    deletePost,
+    isPublishing,
+    publishProgress,
+    isSavingEdit,
+    editProgress,
+  } = useAdminPosts();
 
-  async function fetchPosts() {
-    const res = await fetch("/api/admin/posts");
-    if (res.ok) setPosts(await res.json());
-  }
-
-  // build previews, converting HEIC→JPEG in-browser
-  async function handleFileSelect(e: ChangeEvent<HTMLInputElement>) {
-    // dynamic import only in browser
-    const { default: heic2any } = await import("heic2any");
-
-    const files = e.target.files ? Array.from(e.target.files) : [];
+  function onCreateFilesChanged(files: File[], urls: string[]) {
     setImageFiles(files);
-
-    const urls: string[] = [];
-
-    for (const file of files) {
-      const isHeic =
-        /\.heic$/i.test(file.name) ||
-        file.type === "image/heic" ||
-        file.type === "image/heif";
-
-      if (isHeic) {
-        try {
-          const output = (await heic2any({
-            blob: file,
-            toType: "image/jpeg",
-            quality: 0.8,
-          })) as Blob;
-          urls.push(URL.createObjectURL(output));
-        } catch (error) {
-          console.error("HEIC→JPEG failed:", error);
-          // skip preview for this file
-        }
-      } else {
-        // non-HEIC: blob URL
-        urls.push(URL.createObjectURL(file));
-      }
-    }
-
     setPreviews(urls);
   }
 
@@ -71,28 +38,42 @@ export default function AdminBlogPage() {
     formData.append("title", title);
     formData.append("body", body);
     imageFiles.forEach((file) => formData.append("images", file));
-
-    const res = await fetch("/api/admin/posts", {
-      method: "POST",
-      body: formData,
-    });
-
-    if (res.ok) {
+    try {
+      await createPost(formData);
       setTitle("");
       setBody("");
       setImageFiles([]);
       setPreviews([]);
       fetchPosts();
-    } else {
-      console.error("Upload failed", await res.text());
+    } catch (err) {
+      console.error(err);
+      alert("Upload failed. Check console for details.");
     }
   }
 
   async function handleDelete(id: string) {
     if (!confirm("Delete this post?")) return;
-    const res = await fetch(`/api/admin/posts/${id}`, { method: "DELETE" });
-    if (res.ok) fetchPosts();
-    else console.error("Delete failed", await res.json());
+    await deletePost(id);
+    fetchPosts();
+  }
+
+  function startEdit(id: string) {
+    setEditingId(id);
+  }
+
+  function cancelEdit() {
+    setEditingId(null);
+  }
+
+  async function handleSaveFromForm(postId: string, formData: FormData) {
+    try {
+      await updatePost(postId, formData);
+      setEditingId(null);
+      fetchPosts();
+    } catch (err) {
+      console.error(err);
+      alert("Save failed. Check console for details.");
+    }
   }
 
   return (
@@ -126,16 +107,7 @@ export default function AdminBlogPage() {
               className="w-full p-3 border rounded focus:ring-2 focus:ring-emerald-500 text-black"
             />
 
-            <label className="inline-block px-4 py-2 bg-emerald-600 text-white rounded-full hover:bg-emerald-500 cursor-pointer transition">
-              Choose Images
-              <input
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={handleFileSelect}
-                className="hidden"
-              />
-            </label>
+            <ImagePreviews onChange={onCreateFilesChanged} />
 
             {previews.length > 0 && (
               <div className="flex space-x-4 overflow-x-auto mt-4">
@@ -158,8 +130,11 @@ export default function AdminBlogPage() {
               onMouseLeave={() => setIsHover(false)}
               style={{ backgroundColor: isHover ? "#10B981" : "#059669" }}
               className="w-full text-white py-2 rounded-4xl cursor-pointer transition-colors duration-200 ease-in-out"
+              disabled={isPublishing}
             >
-              Publish Post
+              {isPublishing
+                ? `Publishing... ${publishProgress}%`
+                : "Publish Post"}
             </button>
           </form>
         </div>
@@ -173,35 +148,55 @@ export default function AdminBlogPage() {
             >
               <div className="flex justify-between items-start">
                 <h3 className="text-xl font-bold text-gray-900">{p.title}</h3>
-                <button
-                  onClick={() => handleDelete(p.id)}
-                  className="px-3 py-1 bg-red-600 text-white rounded-full hover:bg-red-500 transition"
-                >
-                  Delete
-                </button>
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={() => startEdit(p.id)}
+                    className="px-3 py-1 bg-amber-600 text-white rounded-full hover:bg-amber-500 transition"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(p.id)}
+                    className="px-3 py-1 bg-red-600 text-white rounded-full hover:bg-red-500 transition"
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
 
-              <div className="flex space-x-4 overflow-x-auto">
-                {p.images.map((src) => {
-                  const filename = src.replace(/^\/uploads\//, "");
-                  return (
-                    <StaticImg
-                      key={src}
-                      src={`/api/uploads/${filename}`}
-                      alt={p.title}
-                      width={400}
-                      height={580}
-                      className="h-32 object-cover rounded"
-                    />
-                  );
-                })}
-              </div>
+              {editingId === p.id ? (
+                <EditPostForm
+                  post={p}
+                  onCancel={cancelEdit}
+                  onSave={(formData) => handleSaveFromForm(p.id, formData)}
+                  isSaving={isSavingEdit}
+                  progress={editProgress}
+                />
+              ) : (
+                <>
+                  <div className="flex space-x-4 overflow-x-auto">
+                    {p.images.map((src) => {
+                      const filename = src.replace(/^\/uploads\//, "");
+                      return (
+                        <StaticImg
+                          key={src}
+                          src={`/api/uploads/${filename}`}
+                          alt={p.title}
+                          width={400}
+                          height={580}
+                          className="h-32 object-cover rounded"
+                        />
+                      );
+                    })}
+                  </div>
 
-              <p className="text-gray-700">
-                {p.body.length > 200
-                  ? p.body.slice(0, 200).trim() + "…"
-                  : p.body}
-              </p>
+                  <p className="text-gray-700">
+                    {p.body.length > 200
+                      ? p.body.slice(0, 200).trim() + "…"
+                      : p.body}
+                  </p>
+                </>
+              )}
             </div>
           ))}
         </div>
