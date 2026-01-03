@@ -17,7 +17,7 @@ export default async function PuppyPage({
   let files: string[] = [];
   try {
     files = fs.readdirSync(imagesDir);
-  } catch (e) {
+  } catch {
     files = [];
   }
 
@@ -25,17 +25,23 @@ export default async function PuppyPage({
     .filter((f) => f.toLowerCase().includes(puppy.toLowerCase()))
     .map((f) => `/images/${f}`);
 
-  let posts: { id?: string; title?: string }[] = [];
+  type Post = { id?: string; title?: string; body?: string };
+  let posts: Post[] = [];
   try {
     const postsJson = path.join(POSTS_DIR, "posts.json");
     if (fs.existsSync(postsJson)) {
-      const p = JSON.parse(fs.readFileSync(postsJson, "utf-8"));
-      posts = p.filter((post: any) => {
-        const text = (post.title || "") + " " + (post.body || "");
-        return text.toLowerCase().includes(puppy.toLowerCase());
-      });
+      const raw = fs.readFileSync(postsJson, "utf-8");
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        posts = (parsed as unknown[])
+          .map((item) => item as Post)
+          .filter((post) => {
+            const text = (post.title || "") + " " + (post.body || "");
+            return text.toLowerCase().includes(puppy.toLowerCase());
+          });
+      }
     }
-  } catch (err) {
+  } catch {
     posts = [];
   }
 

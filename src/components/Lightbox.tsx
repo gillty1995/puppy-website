@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import StaticImg from "@/components/StaticImg";
 
 export default function Lightbox() {
   const [open, setOpen] = useState(false);
@@ -8,8 +9,11 @@ export default function Lightbox() {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    function onOpen(e: any) {
-      const { images: imgs, index: idx } = e.detail || {};
+    function onOpen(e: Event) {
+      const detail =
+        (e as CustomEvent<{ images?: string[]; index?: number }>).detail || {};
+      const imgs = detail.images || [];
+      const idx = detail.index;
       const mapped = (imgs || []).map((s: string) =>
         s.startsWith("/uploads/")
           ? `/api/uploads/${s.replace(/^\/uploads\//, "")}`
@@ -66,11 +70,12 @@ export default function Lightbox() {
       </button>
 
       <div className="max-w-[90vw] max-h-[85vh]">
-        <img
+        <StaticImg
           src={images[index]}
           alt={`large-${index}`}
+          width={1200}
+          height={800}
           className="w-full h-auto max-h-[85vh] object-contain"
-          onClick={(e) => e.stopPropagation()}
         />
       </div>
 

@@ -29,12 +29,12 @@ export default function PreviousLittersPage() {
         </h1>
 
         <p className="text-gray-700 mb-8">
-          Below are our past litters. Click one to view that litter's gallery
-          and info.
+          Below are our past litters. Click one to view that litter&apos;s
+          gallery and info.
         </p>
 
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {LITTERS.map((litter, idx) => (
+          {LITTERS.map((litter) => (
             <Link
               key={litter.slug}
               href={`/previous-litters/${litter.slug}`}

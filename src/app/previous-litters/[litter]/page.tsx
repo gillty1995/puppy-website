@@ -23,7 +23,7 @@ export default async function LitterPage({
   let files: string[] = [];
   try {
     files = fs.readdirSync(imagesDir);
-  } catch (e) {
+  } catch {
     files = [];
   }
 
@@ -65,7 +65,8 @@ export default async function LitterPage({
         </h1>
 
         <p className="text-gray-700 mb-8">
-          Click a puppy to view that puppy's gallery and related blog posts.
+          Click a puppy to view that puppy&apos;s gallery and related blog
+          posts.
         </p>
 
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

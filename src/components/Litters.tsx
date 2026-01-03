@@ -32,7 +32,7 @@ export default function Litters() {
             </h2>
             <p className="text-zinc-200 mb-6 max-w-2xl mx-auto">
               See photos and information from our past litters — click through
-              to view each litter's gallery and details.
+              to view each litter&apos;s gallery and details.
             </p>
 
             <Link

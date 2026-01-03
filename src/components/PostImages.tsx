@@ -17,13 +17,13 @@ export default function PostImages({ images }: { images: string[] }) {
         return (
           <button
             key={src}
-            onClick={() =>
-              window.dispatchEvent(
-                new CustomEvent("openLightbox", {
-                  detail: { images, index: i },
-                }) as any
-              )
-            }
+            onClick={() => {
+              const ev = new CustomEvent<{ images: string[]; index: number }>(
+                "openLightbox",
+                { detail: { images, index: i } }
+              );
+              window.dispatchEvent(ev);
+            }}
             className="block w-full aspect-square bg-gray-100 overflow-hidden rounded-lg"
           >
             <StaticImg
