@@ -10,9 +10,9 @@ const POSTS_DIR = path.join(process.cwd(), "src", "data");
 export default async function PuppyPage({
   params,
 }: {
-  params: { litter: string; puppy: string };
+  params: Promise<{ litter: string; puppy: string }>;
 }) {
-  const { litter, puppy } = params;
+  const { litter, puppy } = await params;
   const imagesDir = path.join(process.cwd(), "public", "images");
   let files: string[] = [];
   try {
@@ -75,7 +75,7 @@ export default async function PuppyPage({
           </h2>
           {posts.length ? (
             <ul className="list-disc pl-6">
-              {posts.map((post: any) => (
+              {posts.map((post: Post) => (
                 <li key={post.id}>
                   <Link
                     href={`/blog/${post.id}`}
