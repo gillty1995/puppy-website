@@ -20,7 +20,9 @@ const filePath = path.join(process.cwd(), "src", "data", "posts.json");
 export async function readPosts(): Promise<Post[]> {
   try {
     const raw = await fs.readFile(filePath, "utf-8");
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed)) return parsed as Post[];
+    return [];
   } catch (err) {
     // cast to the built-in ErrnoException
     const e = err as NodeJS.ErrnoException;
