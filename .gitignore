@@ -50,4 +50,13 @@ next-env.d.ts
 /src/data/posts.json
 
 # ignore scripts folder
-/scripts/
+/scripts/# toolchain/binaries accidentally added
+x86_64-linux-gnu*
+libunwind*
+*.1.gz
+*.gz
+qemu
+setarch
+objcopy*
+objdump*
+nm.1.gz
