@@ -60,3 +60,26 @@ setarch
 objcopy*
 objdump*
 nm.1.gz
+
+# Build output
+/dist
+
+# PID files
+*.pid
+
+# VSCode
+.vscode/
+
+# runtime / auxiliary files
+dump.rdb                 
+worker.log              
+*.log                    
+.env.local.local         
+.eslintcache             
+.cache/                  
+/.vercel/build-cache     
+npm-debug.log*           
+*.tgz                    
+
+next.config.js
+next.config.cjs

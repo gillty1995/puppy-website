@@ -14,11 +14,19 @@ export default function Lightbox() {
         (e as CustomEvent<{ images?: string[]; index?: number }>).detail || {};
       const imgs = detail.images || [];
       const idx = detail.index;
-      const mapped = (imgs || []).map((s: string) =>
-        s.startsWith("/uploads/")
-          ? `/api/uploads/${s.replace(/^\/uploads\//, "")}`
-          : s
-      );
+      const mapped = (imgs || []).map((s: string) => {
+        const cdn = process.env.NEXT_PUBLIC_CDN_URL || "";
+        if (s.startsWith("/uploads/")) {
+          const filename = s.replace(/^\/uploads\//, "");
+          return cdn ? `${cdn}/${filename}` : `/api/uploads/${filename}`;
+        }
+        if (/^uploads\//.test(s)) {
+          return cdn
+            ? `${cdn}/${s}`
+            : `/api/uploads/${s.replace(/^uploads\//, "")}`;
+        }
+        return s;
+      });
       setImages(mapped);
       setIndex(typeof idx === "number" ? idx : 0);
       setOpen(true);

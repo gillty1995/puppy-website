@@ -13,6 +13,21 @@ interface Post {
   imageUrl?: string;
 }
 
+function normalizeToKey(img: string) {
+  if (!img) return "";
+
+  if (img.startsWith("http://") || img.startsWith("https://")) {
+    try {
+      const u = new URL(img);
+      return u.pathname.replace(/^\/+/, "");
+    } catch {
+      return img.replace(/^\/+/, "");
+    }
+  }
+
+  return img.replace(/^\/+/, "");
+}
+
 export default function BlogPage() {
   const [posts, setPosts] = useState<Post[]>([]);
 
@@ -44,8 +59,9 @@ export default function BlogPage() {
               ? [p.imageUrl]
               : [];
 
-            const thumbSrc = imgs.length
-              ? `/api/uploads/${imgs[0].replace(/^\/uploads\//, "")}`
+            const key = imgs.length ? normalizeToKey(imgs[0]) : "";
+            const thumbSrc = key
+              ? `/api/uploads/${key}`
               : "/images/coming-soon.jpg";
 
             return (

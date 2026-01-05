@@ -13,6 +13,8 @@ export interface Post {
   body: string;
   images: string[];
   comments: Comment[];
+  // optional map of generated variants keyed by original basename
+  variants?: Record<string, { thumb: string; large: string }>;
 }
 
 const filePath = path.join(process.cwd(), "src", "data", "posts.json");

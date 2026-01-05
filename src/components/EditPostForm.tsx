@@ -85,9 +85,22 @@ export default function EditPostForm({
               <div key={src} className="relative">
                 <StaticImg
                   src={
+                    // if already an API proxy path, use it
                     src.startsWith("/api/uploads/")
                       ? src
-                      : `/api/uploads/${filename}`
+                      : (() => {
+                          const cdn = process.env.NEXT_PUBLIC_CDN_URL || "";
+                          const filename = src.replace(/^\/uploads\//, "");
+                          if (src.startsWith("/uploads/"))
+                            return cdn
+                              ? `${cdn}/${filename}`
+                              : `/api/uploads/${filename}`;
+                          if (/^uploads\//.test(src))
+                            return cdn
+                              ? `${cdn}/${src}`
+                              : `/api/uploads/${src.replace(/^uploads\//, "")}`;
+                          return src;
+                        })()
                   }
                   alt={post.title}
                   width={160}

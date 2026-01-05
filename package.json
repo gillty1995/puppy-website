@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "puppy-website",
   "version": "0.1.0",
   "private": true,
@@ -8,18 +9,26 @@
     "start": "next start",
     "lint": "next lint",
     "sync-posts": "NODE_ENV=production node scripts/sync-posts.js",
-    "sync-images": "rsync -avz -e \"ssh -i /Users/gooee/Desktop/AWS/awskey2.pem\" ubuntu@18.188.203.20:~/textilepoms/public/uploads/ ./public/uploads",
+    "sync-images": "rsync -avz -e \"ssh -i $DEPLOY_KEY\" $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/public/uploads/ ./public/uploads",
     "sync-all": "npm run sync-posts && npm run sync-images",
     "sync-reviews": "node scripts/sync-reviews.js",
-    "deploy": "npm run build && rsync -avz -e \"ssh -i /Users/gooee/Desktop/AWS/awskey2.pem\" --exclude 'node_modules' --exclude '.git' ./ ubuntu@18.188.203.20:~/textilepoms && ssh -i /Users/gooee/Desktop/AWS/awskey2.pem ubuntu@18.188.203.20 \"bash -lc 'cd ~/textilepoms && npm install --production && (pm2 restart textilepoms || pm2 start \\\"npm start\\\" --name textilepoms)'\""
+    "deploy": "npm run build && rsync -avz -e \"ssh -i $DEPLOY_KEY\" --exclude 'node_modules' --exclude '.git' ./ $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH && ssh -i $DEPLOY_KEY $DEPLOY_USER@$DEPLOY_HOST \"bash -lc 'cd $DEPLOY_PATH && npm install --production && (pm2 restart textilepoms || pm2 start \\\"npm start\\\" --name textilepoms)'\"",
+    "worker": "node ./src/workers/imageProcessor.js",
+    "enqueue-test": "node ./src/scripts/enqueue-test.js"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.574.0",
+    "browser-image-compression": "^2.0.1",
+    "bullmq": "^3.5.0",
     "formidable": "^3.5.3",
     "framer-motion": "^12.7.4",
     "heic-convert": "^2.1.0",
     "heic2any": "^0.0.4",
-    "next": "15.3.1",
-    "nodemailer": "^6.10.1",
+    "ioredis": "^5.3.2",
+    "next": "^15.5.9",
+    "node-addon-api": "^8.5.0",
+    "node-gyp": "^12.1.0",
+    "nodemailer": "^7.0.12",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
@@ -30,13 +39,13 @@
     "@tailwindcss/postcss": "^4",
     "@types/formidable": "^3.4.5",
     "@types/heic-convert": "^2.1.0",
-    "@types/node": "^20",
+    "@types/node": "^20.19.27",
     "@types/nodemailer": "^6.4.17",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.3.1",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5.9.3"
   }
 }
