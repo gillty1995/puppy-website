@@ -13,8 +13,7 @@ const local = path.join(__dirname, "../src/data/adoptions.json");
 const temp = path.join(__dirname, "../src/data/adoptions.remote.json");
 const sshKey =
   process.env.DEPLOY_SSH_KEY ||
-  process.env.DEPLOY_KEY ||
-  "/Users/gooee/Desktop/AWS/awskey.pem";
+  process.env.DEPLOY_KEY ;
 
 // 1. Download remote file to temp
 const cmd = `rsync -avz -e "ssh -i ${sshKey}" ${remote} ${temp}`;
