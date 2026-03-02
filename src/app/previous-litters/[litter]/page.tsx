@@ -48,7 +48,7 @@ export default async function LitterPage({
       <div className="mx-auto max-w-6xl">
         <Link
           href="/previous-litters"
-          className="text-blue-600 hover:underline block mb-8"
+          className="text-black hover:underline block mb-8"
         >
           &larr; Back to Previous Litters
         </Link>

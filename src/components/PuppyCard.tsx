@@ -11,6 +11,25 @@ interface PuppyCardProps {
 }
 
 export default function PuppyCard({ id, name, image, price }: PuppyCardProps) {
+  const priceLabel = (() => {
+    if (typeof price === "number") {
+      return `$${price.toFixed(2)}`;
+    }
+
+    const raw = `${price}`.trim();
+    if (!raw) return raw;
+
+    if (raw.toUpperCase() === "SOLD") return raw;
+    if (raw.includes("$")) return raw;
+
+    const numeric = Number(raw.replace(/,/g, ""));
+    if (!Number.isNaN(numeric)) {
+      return `$${numeric.toLocaleString()}`;
+    }
+
+    return raw;
+  })();
+
   return (
     <Link href={`/puppy/${id}`}>
       <div className="flex flex-col cursor-pointer group">
@@ -42,11 +61,7 @@ export default function PuppyCard({ id, name, image, price }: PuppyCardProps) {
                 "
               />
               {/* the price text sits above the fill */}
-              <span className="relative">
-                {typeof price === "number"
-                  ? `$${price.toFixed(2)}`
-                  : `${price}`}
-              </span>
+              <span className="relative">{priceLabel}</span>
             </span>
           </div>
         </motion.div>

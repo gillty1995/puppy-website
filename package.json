@@ -12,7 +12,7 @@
     "sync-images": "rsync -avz -e \"ssh -i $DEPLOY_KEY\" $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/public/uploads/ ./public/uploads",
     "sync-all": "npm run sync-posts && npm run sync-images",
     "sync-reviews": "node scripts/sync-reviews.js",
-    "deploy": "npm run build && rsync -avz -e \"ssh -i $DEPLOY_KEY\" --exclude 'node_modules' --exclude '.git' ./ $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH && ssh -i $DEPLOY_KEY $DEPLOY_USER@$DEPLOY_HOST \"bash -lc 'cd $DEPLOY_PATH && npm install --production && (pm2 restart textilepoms || pm2 start \\\"npm start\\\" --name textilepoms)'\"",
+    "deploy": "npm run build && rsync -avz -e \"ssh -i $DEPLOY_KEY\" --exclude 'node_modules' --exclude '.git' --exclude 'src/data/posts.json' --exclude 'public/uploads/' ./ $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH && ssh -i $DEPLOY_KEY $DEPLOY_USER@$DEPLOY_HOST \"bash -lc 'cd $DEPLOY_PATH && npm install --production && (pm2 restart textilepoms || pm2 start \\\"npm start\\\" --name textilepoms)'\"",
     "worker": "node ./src/workers/imageProcessor.js",
     "enqueue-test": "node ./src/scripts/enqueue-test.js"
   },

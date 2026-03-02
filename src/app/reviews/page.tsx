@@ -29,7 +29,7 @@ function SubmitReviewPage() {
       <div className="mx-auto max-w-xl w-full">
         <Link
           href="/adoptions"
-          className="text-blue-600 hover:underline block mb-8"
+          className="text-black hover:underline block mb-8"
         >
           &larr; Back to Adoptions
         </Link>

@@ -81,7 +81,7 @@ export default function AdminBlogPage() {
       <div className="mx-auto max-w-4xl">
         <Link
           href="/#puppies"
-          className="text-blue-600 hover:underline block mb-8"
+          className="text-black hover:underline block mb-8"
         >
           &larr; Back to Home
         </Link>

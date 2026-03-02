@@ -42,7 +42,7 @@ export default function AdminAdoptionReviewsPage() {
   return (
     <section className="py-16 px-6 md:px-20">
       <div className="max-w-2xl mx-auto bg-white p-8 rounded shadow">
-        <Link href="/" className="text-blue-600 hover:underline block mb-8">
+        <Link href="/" className="text-black hover:underline block mb-8">
           &larr; Back to Home
         </Link>
         <h1 className="text-3xl text-gray-900 text-center font-serif mb-6">
