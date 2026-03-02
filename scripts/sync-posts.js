@@ -5,35 +5,45 @@ if (process.env.NODE_ENV !== "production") {
   process.exit(0);
 }
 
-const fs = require("fs/promises");
-const path = require("path");
+import fs from "fs/promises";
+import path from "path";
 
 const ORIGIN = "https://textilepoms.com";
 const API_URL = `${ORIGIN}/api/posts`;
 const OUT_JSON = path.join(process.cwd(), "src/data/posts.json");
 const UPLOADS = path.join(process.cwd(), "public/uploads");
 
+function withLeadingSlash(value) {
+  return value.startsWith("/") ? value : `/${value}`;
+}
+
+function deriveLocalRelativePath(value) {
+  const pathname = /^https?:\/\//.test(value) ? new URL(value).pathname : value;
+  return pathname
+    .replace(/^\/?uploads\//, "")
+    .replace(/^\/+/, "");
+}
+
 async function fetchImageWithFallback(imgPath) {
-  // build a small list of candidate paths
-  const candidates = [
+  const pathCandidates = [
     imgPath,
-    // collapse duplicate extensions: foo.jpg.jpg → foo.jpg
     imgPath.replace(/(\.\w+)(?:\1)+$/, "$1"),
-    // strip final extension entirely: foo.png → foo
     imgPath.replace(/\.\w+$/, ""),
   ];
+  const candidates = pathCandidates.map((candidate) =>
+    /^https?:\/\//.test(candidate) ? candidate : `${ORIGIN}${withLeadingSlash(candidate)}`
+  );
 
   for (const candidate of candidates) {
-    const url = ORIGIN + candidate;
-    const resp = await fetch(url);
+    const resp = await fetch(candidate);
     if (resp.ok) {
       const buf = Buffer.from(await resp.arrayBuffer());
-      return { buffer: buf, finalPath: candidate };
+      return { buffer: buf, finalPath: candidate, localRelativePath: deriveLocalRelativePath(candidate) };
     }
   }
 
   throw new Error(
-    `all fetches failed: ${candidates.map((c) => ORIGIN + c).join(", ")}`
+    `all fetches failed: ${candidates.join(", ")}`
   );
 }
 
@@ -52,11 +62,8 @@ async function syncPosts() {
   await Promise.all(
     allImgs.map(async (imgPath) => {
       try {
-        const { buffer, finalPath } = await fetchImageWithFallback(imgPath);
-        const localFile = path.join(
-          UPLOADS,
-          finalPath.replace(/^\/uploads\//, "")
-        );
+        const { buffer, finalPath, localRelativePath } = await fetchImageWithFallback(imgPath);
+        const localFile = path.join(UPLOADS, localRelativePath);
         await fs.mkdir(path.dirname(localFile), { recursive: true });
         await fs.writeFile(localFile, buffer);
         console.log(`   ↳ downloaded ${finalPath}`);

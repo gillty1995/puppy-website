@@ -6,7 +6,7 @@ export default function PrivacyPolicyPage() {
     <main className="min-h-screen bg-white px-6 md:px-20 py-16 text-black">
       <Link
         href="/#contact"
-        className="text-blue-600 hover:underline block mb-8"
+        className="text-black hover:underline block mb-8"
       >
         &larr; Back to Contact
       </Link>
@@ -39,7 +39,7 @@ export default function PrivacyPolicyPage() {
       <p className="mb-8">
         You can request deletion of your data at any time by submitting a
         request through our{" "}
-        <Link href="/#contact" className="text-blue-600 hover:underline">
+        <Link href="/#contact" className="text-black hover:underline">
           Contact Form
         </Link>
         .

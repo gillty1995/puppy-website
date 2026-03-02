@@ -61,7 +61,7 @@ export default function LoginModal({
           <button
             type="submit"
             style={{ backgroundColor: "#059669" }}
-            className="w-full hover:text-blue-400 text-white py-2 rounded cursor-pointer"
+            className="w-full hover:text-black text-white py-2 rounded cursor-pointer"
           >
             Log In
           </button>

@@ -50,7 +50,7 @@ export default async function PuppyPage({
       <div className="mx-auto max-w-6xl">
         <Link
           href={`/previous-litters/${litter}`}
-          className="text-blue-600 hover:underline block mb-8"
+          className="text-black hover:underline block mb-8"
         >
           &larr; Back to Puppies of{" "}
           {litter
@@ -79,7 +79,7 @@ export default async function PuppyPage({
                 <li key={post.id}>
                   <Link
                     href={`/blog/${post.id}`}
-                    className="text-blue-600 hover:underline"
+                    className="text-black hover:underline"
                   >
                     {post.title}
                   </Link>

@@ -13,7 +13,7 @@ export interface Puppy {
          {
       id: "puppy1",
       name: "Satin",
-      image: "/images/Satin.jpeg",
+      image: "/images/satin1.jpeg",
       price: "3000",
       age: "Jan 1st, 2026",
       color: "Clear Orange",
@@ -23,8 +23,8 @@ export interface Puppy {
      {
       id: "puppy2",
       name: "Sea Silk",
-      image: "/images/SeaSilk.jpeg",
-      price: "3000",
+      image: "/images/seasilk1.jpeg",
+      price: "ADOPTED",
       age: "Jan 1st, 2026",
       color: "True White",
       description: "Some poms are actually a very pale cream, appearing white as puppies but developing richer cream tones as adults. Puppies are known to undergo color changes as they grow, this change is a normal part of their growth and can happen between 4 and 6 months of age.",
@@ -33,7 +33,7 @@ export interface Puppy {
     {
       id: "puppy3",
       name: "Suede",
-      image: "/images/Suede.jpeg",
+      image: "/images/suede1.jpeg",
       price: "3000",
       age: "Jan 1st, 2026",
       color: "White",
@@ -43,7 +43,7 @@ export interface Puppy {
     {
       id: "puppy4",
       name: "Saye",
-      image: "/images/Saye.jpeg",
+      image: "/images/saye1.jpeg",
       price: "3000",
       age: "Jan 1st, 2026",
       color: "Cream",
@@ -53,7 +53,7 @@ export interface Puppy {
      {
       id: "puppy5",
       name: "Sable",
-      image: "/images/Sable.jpeg",
+      image: "/images/sable1.jpeg",
       price: "3000",
       age: "Jan 1st, 2026",
       color: "Piebald Parti-Pom",

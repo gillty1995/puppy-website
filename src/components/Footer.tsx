@@ -42,7 +42,7 @@ export default function Footer() {
           {!isAdmin ? (
             <button
               onClick={() => setShowLogin(true)}
-              className="px-3 py-1 border border-blue-400 rounded text-blue-400 hover:bg-blue-500 hover:text-white transition"
+              className="px-3 py-1 border border-black rounded text-black hover:bg-black hover:text-white transition"
             >
               Admin
             </button>

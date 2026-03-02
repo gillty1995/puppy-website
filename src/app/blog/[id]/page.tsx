@@ -33,7 +33,7 @@ export default async function PostPage({ params }: PageProps) {
   return (
     <section id="blog-post" className="py-16 bg-gray-50 px-6 md:px-20">
       <div className="mx-auto max-w-4xl">
-        <Link href="/blog" className="text-blue-600 hover:underline">
+        <Link href="/blog" className="text-black hover:underline">
           &larr; Back to Blog
         </Link>
 

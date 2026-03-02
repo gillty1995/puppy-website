@@ -36,7 +36,7 @@ export default function AdoptionsPage() {
       <div className="mx-auto max-w-5xl">
         <Link
           href="/#home"
-          className="text-blue-600 hover:underline block mb-8"
+          className="text-black hover:underline block mb-8"
         >
           &larr; Back to Home
         </Link>

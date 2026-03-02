@@ -100,11 +100,11 @@ export default function ContactForm() {
             <p className="text-xs text-gray-500">
               By entering your email and clicking the arrow, you agree to
               receive emails from us. Unsubscribe anytime; see our{" "}
-              <Link href="/privacy-policy" className="underline text-blue-600">
+              <Link href="/privacy-policy" className="underline text-black">
                 Privacy Policy
               </Link>{" "}
               &{" "}
-              <Link href="/terms" className="underline text-blue-600">
+              <Link href="/terms" className="underline text-black">
                 Terms of Service
               </Link>
               .

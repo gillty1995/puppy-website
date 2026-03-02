@@ -1,6 +1,10 @@
-const { execSync } = require("child_process");
-const fs = require("fs");
-const path = require("path");
+import { execSync } from "node:child_process";
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const deployUser = process.env.DEPLOY_USER || "ubuntu";
 const deployHost = process.env.DEPLOY_HOST || "3.139.240.156";
