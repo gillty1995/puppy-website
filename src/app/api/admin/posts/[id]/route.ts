@@ -7,6 +7,7 @@ import { readPosts, writePosts } from "@/data/posts";
 import { Queue } from "bullmq";
 import IORedis from "ioredis";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { requireAdminApi } from "@/lib/admin";
 
 sharp.cache(false);
 sharp.concurrency(1);
@@ -27,6 +28,9 @@ export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const unauthorized = await requireAdminApi();
+  if (unauthorized) return unauthorized;
+
   const { id } = await params;
   const posts = await readPosts();
   const filtered = posts.filter((p) => p.id !== id);
@@ -44,6 +48,9 @@ export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const unauthorized = await requireAdminApi();
+  if (unauthorized) return unauthorized;
+
   const { id } = await params;
   const formData = await request.formData();
   const title = formData.get("title")?.toString() || "";

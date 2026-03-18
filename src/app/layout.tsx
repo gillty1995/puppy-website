@@ -1,6 +1,6 @@
 import "./globals.css";
 import { ReactNode } from "react";
-import { AdminProvider } from "./context/AdminContext";
+import { ClerkProvider } from "@clerk/nextjs";
 import StructuredData from "@/components/StructuredData";
 
 export const metadata = {
@@ -47,7 +47,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <StructuredData />
       </head>
       <body className="bg-gray-50 text-gray-900">
-        <AdminProvider>{children}</AdminProvider>
+        <ClerkProvider>{children}</ClerkProvider>
       </body>
     </html>
   );

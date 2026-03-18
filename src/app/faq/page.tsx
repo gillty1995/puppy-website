@@ -41,7 +41,7 @@ export default function FAQPage() {
               Can I put a deposit down to reserve a puppy?
             </h2>
             <p>
-              Yes — placing a $500 deposit will reserve your chosen puppy. This
+              Yes — placing a $1,000 deposit will reserve your chosen puppy. This
               non-refundable deposit secures your puppy and is applied toward
               the total adoption fee. If a puppy is on the website it is still
               available!
@@ -96,7 +96,7 @@ export default function FAQPage() {
             <p>
               Our puppies range from $1,000 to $3,500 depending on coat color,
               markings, and sex. If you apply for the reservation deposit of
-              $500, it will be applied to the final fee.
+              $1,000, it will be applied to the final fee.
             </p>
           </div>
         </div>

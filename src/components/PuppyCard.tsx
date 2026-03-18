@@ -7,27 +7,25 @@ interface PuppyCardProps {
   id: string;
   name: string;
   image: string;
-  price: number | string;
+  price: number | null;
+  status?: "available" | "reserved" | "adopted";
 }
 
-export default function PuppyCard({ id, name, image, price }: PuppyCardProps) {
+export default function PuppyCard({
+  id,
+  name,
+  image,
+  price,
+  status = "available",
+}: PuppyCardProps) {
   const priceLabel = (() => {
+    if (status === "adopted") return "ADOPTED";
+    if (status === "reserved") return "RESERVED";
+
     if (typeof price === "number") {
       return `$${price.toFixed(2)}`;
     }
-
-    const raw = `${price}`.trim();
-    if (!raw) return raw;
-
-    if (raw.toUpperCase() === "SOLD") return raw;
-    if (raw.includes("$")) return raw;
-
-    const numeric = Number(raw.replace(/,/g, ""));
-    if (!Number.isNaN(numeric)) {
-      return `$${numeric.toLocaleString()}`;
-    }
-
-    return raw;
+    return "Contact";
   })();
 
   return (
