@@ -69,6 +69,7 @@ export async function POST(
       customer: customer.id,
       collection_method: "send_invoice",
       days_until_due: 7,
+      pending_invoice_items_behavior: "include",
       metadata: {
         puppyId: puppy.id,
         puppyName: puppy.name,

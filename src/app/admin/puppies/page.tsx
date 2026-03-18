@@ -150,13 +150,13 @@ export default function AdminPuppiesPage() {
           <div className="flex gap-3">
             <Link
               href="/admin/blog"
-              className="rounded-full border border-gray-300 px-5 py-3 text-sm font-medium text-gray-900 transition hover:bg-white"
+              className="flex items-center justify-center rounded-full border border-gray-300 px-5 py-3 text-sm font-medium text-gray-900 transition hover:bg-white"
             >
               Blog Admin
             </Link>
             <Link
               href="/#puppies"
-              className="rounded-full bg-emerald-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-emerald-500"
+              className="flex items-center justify-center rounded-full bg-emerald-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-emerald-500"
             >
               View Site
             </Link>
@@ -176,10 +176,13 @@ export default function AdminPuppiesPage() {
             </div>
           ) : (
             puppies.map((puppy) => {
-              const remainingBalance = Math.max(
-                (puppy.currentPrice ?? 0) - (puppy.payment?.depositPaidAmount ?? 0),
-                0
-              );
+              const finalInvoicePaid = puppy.payment?.finalInvoiceStatus === "paid";
+              const remainingBalance = finalInvoicePaid
+                ? 0
+                : Math.max(
+                    (puppy.currentPrice ?? 0) - (puppy.payment?.depositPaidAmount ?? 0),
+                    0
+                  );
 
               return (
                 <section
@@ -317,12 +320,18 @@ export default function AdminPuppiesPage() {
                     <button
                       type="button"
                       onClick={() => sendInvoice(puppy)}
-                      disabled={invoiceId === puppy.id}
+                      disabled={
+                        invoiceId === puppy.id ||
+                        finalInvoicePaid ||
+                        remainingBalance <= 0
+                      }
                       className="rounded-full border border-emerald-600 px-5 py-3 text-sm font-medium text-emerald-700 transition hover:bg-emerald-50 disabled:cursor-not-allowed disabled:border-emerald-200 disabled:text-emerald-300"
                     >
                       {invoiceId === puppy.id
                         ? "Creating Invoice..."
-                        : "Send Remaining Balance Invoice"}
+                        : finalInvoicePaid
+                          ? "Invoice Paid"
+                          : "Send Remaining Balance Invoice"}
                     </button>
                     {puppy.payment?.finalInvoiceUrl ? (
                       <a
