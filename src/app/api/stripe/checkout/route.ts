@@ -19,12 +19,15 @@ export async function POST(request: Request) {
     }
 
     const stripe = getStripe();
-    const origin = new URL(request.url).origin;
+    const siteUrl =
+      process.env.NEXT_PUBLIC_SITE_URL ||
+      process.env.SITE_URL ||
+      new URL(request.url).origin;
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       billing_address_collection: "auto",
-      success_url: `${origin}/reserve/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/reserve/cancel?puppy=${puppy.id}`,
+      success_url: `${siteUrl}/reserve/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${siteUrl}/reserve/cancel?puppy=${puppy.id}`,
       customer_creation: "always",
       payment_intent_data: {
         metadata: {
