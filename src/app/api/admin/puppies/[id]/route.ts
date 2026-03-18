@@ -19,6 +19,7 @@ export async function PUT(
   }
 
   const current = puppies[index];
+  const resetPayment = Boolean(updates.resetPayment);
   puppies[index] = {
     ...current,
     currentPrice:
@@ -27,13 +28,18 @@ export async function PUT(
         : Number(updates.currentPrice),
     depositAmount: Number(updates.depositAmount ?? current.depositAmount),
     status: updates.status ?? current.status,
-    payment: {
-      ...current.payment,
-      reservedByEmail:
-        updates.reservedByEmail ?? current.payment?.reservedByEmail,
-      reservedByName:
-        updates.reservedByName ?? current.payment?.reservedByName,
-    },
+    payment: resetPayment
+      ? {
+          reservedByEmail: updates.reservedByEmail || "",
+          reservedByName: updates.reservedByName || "",
+        }
+      : {
+          ...current.payment,
+          reservedByEmail:
+            updates.reservedByEmail ?? current.payment?.reservedByEmail,
+          reservedByName:
+            updates.reservedByName ?? current.payment?.reservedByName,
+        },
   };
 
   await writePuppies(puppies);

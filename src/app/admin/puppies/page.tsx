@@ -28,6 +28,7 @@ export default function AdminPuppiesPage() {
   const [loading, setLoading] = useState(true);
   const [savingId, setSavingId] = useState<string | null>(null);
   const [invoiceId, setInvoiceId] = useState<string | null>(null);
+  const [resettingId, setResettingId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   async function fetchPuppies() {
@@ -102,6 +103,40 @@ export default function AdminPuppiesPage() {
       setError(err instanceof Error ? err.message : "Unable to save puppy.");
     } finally {
       setSavingId(null);
+    }
+  }
+
+  async function resetPaymentState(puppy: PuppyAdminRecord) {
+    try {
+      setError(null);
+      setResettingId(puppy.id);
+      const response = await fetch(`/api/admin/puppies/${puppy.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          currentPrice: puppy.currentPrice,
+          depositAmount: puppy.depositAmount,
+          status: "available",
+          reservedByEmail: "",
+          reservedByName: "",
+          resetPayment: true,
+        }),
+      });
+
+      const payload = await response.json();
+      if (!response.ok) {
+        throw new Error(payload.error || "Unable to reset payment state.");
+      }
+
+      setPuppies((current) =>
+        current.map((entry) => (entry.id === puppy.id ? payload : entry))
+      );
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Unable to reset payment state."
+      );
+    } finally {
+      setResettingId(null);
     }
   }
 
@@ -312,16 +347,27 @@ export default function AdminPuppiesPage() {
                     <button
                       type="button"
                       onClick={() => savePuppy(puppy)}
-                      disabled={savingId === puppy.id}
+                      disabled={savingId === puppy.id || resettingId === puppy.id}
                       className="rounded-full bg-emerald-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-emerald-500 disabled:cursor-not-allowed disabled:bg-emerald-300"
                     >
                       {savingId === puppy.id ? "Saving..." : "Save Puppy"}
                     </button>
                     <button
                       type="button"
+                      onClick={() => resetPaymentState(puppy)}
+                      disabled={resettingId === puppy.id || savingId === puppy.id}
+                      className="rounded-full border border-amber-500 px-5 py-3 text-sm font-medium text-amber-700 transition hover:bg-amber-50 disabled:cursor-not-allowed disabled:border-amber-200 disabled:text-amber-300"
+                    >
+                      {resettingId === puppy.id
+                        ? "Resetting..."
+                        : "Reset Payment State"}
+                    </button>
+                    <button
+                      type="button"
                       onClick={() => sendInvoice(puppy)}
                       disabled={
                         invoiceId === puppy.id ||
+                        resettingId === puppy.id ||
                         finalInvoicePaid ||
                         remainingBalance <= 0
                       }
