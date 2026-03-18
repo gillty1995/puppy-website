@@ -29,41 +29,45 @@ export default function SignInPage() {
           </div>
         </section>
 
-        <section className="rounded-[2rem] border border-stone-200/80 bg-white/95 p-4 shadow-[0_20px_60px_rgba(15,23,42,0.08)] backdrop-blur sm:rounded-[2.5rem] sm:p-6 md:p-8">
-          <SignIn
-            path="/sign-in"
-            routing="path"
-            forceRedirectUrl="/admin/puppies"
-            appearance={{
-              variables: {
-                colorPrimary: "#059669",
-                colorBackground: "#ffffff",
-                colorInputBackground: "#fafaf9",
-                colorInputText: "#111827",
-                colorText: "#111827",
-                colorTextSecondary: "#4b5563",
-                borderRadius: "1rem",
-              },
-              elements: {
-                card: "shadow-none border-0 p-0 bg-transparent",
-                rootBox: "w-full",
-                headerTitle: "text-2xl sm:text-3xl font-bold text-gray-900",
-                headerSubtitle: "text-sm sm:text-base text-gray-600",
-                footer: "hidden",
-                form: "gap-5",
-                socialButtonsBlockButton:
-                  "min-h-12 rounded-2xl border border-stone-200 shadow-none",
-                formButtonPrimary:
-                  "min-h-12 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white shadow-none",
-                formFieldInput:
-                  "min-h-12 rounded-2xl border border-stone-200 bg-stone-50 focus:border-emerald-500 focus:ring-emerald-500",
-                formFieldLabel: "text-sm font-medium text-gray-700",
-                formFieldAction: "text-sm text-emerald-700 hover:text-emerald-600",
-                dividerText: "text-xs uppercase tracking-[0.25em] text-stone-400",
-                identityPreviewText: "text-sm text-gray-700",
-              },
-            }}
-          />
+        <section className="rounded-[2rem] border border-stone-200/80 bg-white/95 p-3 shadow-[0_20px_60px_rgba(15,23,42,0.08)] backdrop-blur sm:rounded-[2.5rem] sm:p-6 md:p-8">
+          <div className="-mx-1 sm:mx-0">
+            <SignIn
+              path="/sign-in"
+              routing="path"
+              forceRedirectUrl="/admin/puppies"
+              appearance={{
+                variables: {
+                  colorPrimary: "#059669",
+                  colorBackground: "#ffffff",
+                  colorInputBackground: "#fafaf9",
+                  colorInputText: "#111827",
+                  colorText: "#111827",
+                  colorTextSecondary: "#4b5563",
+                  borderRadius: "1rem",
+                },
+                elements: {
+                  cardBox: "w-full max-w-none shadow-none",
+                  card: "shadow-none border-0 p-0 bg-transparent",
+                  rootBox: "w-full max-w-none",
+                  main: "w-full max-w-none",
+                  headerTitle: "text-2xl sm:text-3xl font-bold text-gray-900",
+                  headerSubtitle: "text-sm sm:text-base text-gray-600",
+                  footer: "hidden",
+                  form: "gap-5",
+                  socialButtonsBlockButton:
+                    "min-h-12 rounded-2xl border border-stone-200 shadow-none",
+                  formButtonPrimary:
+                    "min-h-12 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white shadow-none",
+                  formFieldInput:
+                    "min-h-12 rounded-2xl border border-stone-200 bg-stone-50 focus:border-emerald-500 focus:ring-emerald-500",
+                  formFieldLabel: "text-sm font-medium text-gray-700",
+                  formFieldAction: "text-sm text-emerald-700 hover:text-emerald-600",
+                  dividerText: "text-xs uppercase tracking-[0.25em] text-stone-400",
+                  identityPreviewText: "text-sm text-gray-700",
+                },
+              }}
+            />
+          </div>
         </section>
       </div>
     </main>
