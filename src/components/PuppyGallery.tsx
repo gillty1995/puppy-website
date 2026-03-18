@@ -1,7 +1,9 @@
+import { unstable_noStore as noStore } from "next/cache";
 import PuppyCard from "./PuppyCard";
 import { readPuppies } from "@/data/puppies";
 
 export default async function PuppyGallery() {
+  noStore();
   const puppies = await readPuppies();
 
   return (

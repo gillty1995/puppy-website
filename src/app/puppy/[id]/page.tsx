@@ -40,9 +40,11 @@ export default async function PuppyPage(props: {
           <h1 className="text-5xl font-extrabold text-gray-900">
             {puppy.name}
           </h1>
-          <p className="mt-4 text-2xl text-gray-700">
-            {formatPuppyPrice(puppy)}
-          </p>
+          {puppy.status !== "adopted" ? (
+            <p className="mt-4 text-2xl text-gray-700">
+              {formatPuppyPrice(puppy)}
+            </p>
+          ) : null}
           <p className="mt-2 text-sm uppercase tracking-[0.25em] text-emerald-700">
             {puppy.status}
           </p>
