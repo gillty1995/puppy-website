@@ -1,25 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-
-interface Comment {
-  email: string;
-  comment: string;
-  createdAt: string;
-}
-
-// mask emails
-function maskEmail(email: string): string {
-  const [local, domain] = email.split("@");
-  if (!domain) return email;
-  return `${"*".repeat(local.length)}@${domain}`;
-}
+import { PublicComment } from "@/lib/commentPrivacy";
 
 export default function CommentsSection({ postId }: { postId: string }) {
   const [isHover, setIsHover] = useState(false);
-  const [comments, setComments] = useState<Comment[]>([]);
+  const [comments, setComments] = useState<PublicComment[]>([]);
   const [email, setEmail] = useState("");
   const [text, setText] = useState("");
+  const [error, setError] = useState("");
   const [status, setStatus] = useState<
     "idle" | "sending" | "error" | "success"
   >("idle");
@@ -36,20 +25,29 @@ export default function CommentsSection({ postId }: { postId: string }) {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("sending");
+    setError("");
     try {
       const res = await fetch(`/api/posts/${postId}/comments`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, comment: text }),
       });
-      if (!res.ok) throw new Error();
+      if (!res.ok) {
+        const data = (await res.json().catch(() => null)) as
+          | { error?: string }
+          | null;
+        throw new Error(data?.error || "Submission failed. Please try again.");
+      }
       const newC = await res.json();
       setComments((c) => [...c, newC]);
       setEmail("");
       setText("");
       setStatus("success");
-    } catch {
+    } catch (err) {
       setStatus("error");
+      setError(
+        err instanceof Error ? err.message : "Submission failed. Please try again."
+      );
     }
   };
 
@@ -62,7 +60,7 @@ export default function CommentsSection({ postId }: { postId: string }) {
         {comments.map((c) => (
           <div key={c.createdAt} className="p-4 bg-gray-100 rounded">
             <p className="text-sm text-gray-600">
-              {maskEmail(c.email)} • {new Date(c.createdAt).toLocaleString()}
+              {c.maskedEmail} • {new Date(c.createdAt).toLocaleString()}
             </p>
             <p className="text-gray-800">{c.comment}</p>
           </div>
@@ -77,9 +75,7 @@ export default function CommentsSection({ postId }: { postId: string }) {
         <p className="text-emerald-600 mb-4">Thanks for your comment!</p>
       )}
       {status === "error" && (
-        <p className="text-red-600 mb-4">
-          Submission failed. Please try again.
-        </p>
+        <p className="text-red-600 mb-4">{error}</p>
       )}
 
       <form onSubmit={submit} className="space-y-4">

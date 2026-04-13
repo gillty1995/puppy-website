@@ -1,18 +1,54 @@
 "use client";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { motion } from "framer-motion";
 import { FaArrowRight } from "react-icons/fa";
 import Link from "next/link";
+import TurnstileWidget from "@/components/TurnstileWidget";
 
 export default function ContactForm() {
-  const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
+    "idle"
+  );
+  const [error, setError] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [turnstileResetKey, setTurnstileResetKey] = useState(0);
+
+  const handleTurnstileTokenChange = useCallback((token: string) => {
+    setTurnstileToken(token);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("sending");
-    const form = new FormData(e.target as HTMLFormElement);
-    await fetch("/api/contact", { method: "POST", body: form });
-    setStatus("sent");
+    setError("");
+
+    const formElement = e.target as HTMLFormElement;
+    const form = new FormData(formElement);
+    form.set("cf-turnstile-response", turnstileToken);
+
+    try {
+      const response = await fetch("/api/contact", { method: "POST", body: form });
+      if (!response.ok) {
+        const data = (await response.json().catch(() => null)) as
+          | { error?: string }
+          | null;
+        throw new Error(data?.error || "Something went wrong. Please try again.");
+      }
+
+      setStatus("sent");
+      formElement.reset();
+      setTurnstileToken("");
+      setTurnstileResetKey((current) => current + 1);
+    } catch (err) {
+      setStatus("error");
+      setTurnstileToken("");
+      setTurnstileResetKey((current) => current + 1);
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong. Please try again."
+      );
+    }
   };
 
   return (
@@ -56,6 +92,17 @@ export default function ContactForm() {
         ) : (
           // The form
           <form onSubmit={handleSubmit} className="space-y-8">
+            <div className="hidden" aria-hidden="true">
+              <label htmlFor="website">Website</label>
+              <input
+                id="website"
+                name="website"
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+              />
+            </div>
+
             <div className="relative">
               <input
                 name="email"
@@ -70,11 +117,11 @@ export default function ContactForm() {
               />
               <button
                 type="submit"
-                disabled={status === "sending"}
+                disabled={status === "sending" || !turnstileToken}
                 className="
                   absolute top-1/2 right-0 -translate-y-1/2 p-2
                   text-gray-600 hover:text-gray-900 focus:outline-none
-                  cursor-pointer
+                  cursor-pointer disabled:cursor-not-allowed disabled:text-gray-400
                 "
               >
                 {status === "sending" ? (
@@ -109,6 +156,17 @@ export default function ContactForm() {
               </Link>
               .
             </p>
+
+            <TurnstileWidget
+              onTokenChange={handleTurnstileTokenChange}
+              resetKey={turnstileResetKey}
+            />
+
+            {status === "error" && (
+              <p className="text-sm text-red-700" role="alert">
+                {error}
+              </p>
+            )}
           </form>
         )}
       </div>
