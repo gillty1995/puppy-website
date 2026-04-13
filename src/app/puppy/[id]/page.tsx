@@ -1,28 +1,19 @@
 // app/puppy/[id]/page.tsx
-
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { puppies, Puppy } from "@/utils/PuppyData";
-
-function formatPuppyPrice(price: Puppy["price"]) {
-  if (typeof price === "number") return `$${price.toLocaleString()} USD`;
-
-  const raw = `${price}`.trim();
-  if (!raw) return raw;
-  if (raw.includes("$")) return raw;
-
-  const numeric = Number(raw.replace(/,/g, ""));
-  if (!Number.isNaN(numeric)) return `$${numeric.toLocaleString()} USD`;
-
-  return raw;
-}
+import {
+  formatPuppyPrice,
+  getRemainingBalance,
+  readPuppyById,
+} from "@/data/puppies";
+import PuppyReserveButton from "@/components/PuppyReserveButton";
 
 export default async function PuppyPage(props: {
   params: Promise<{ id: string }>;
 }) {
   const params = await props.params;
-  const puppy: Puppy | undefined = puppies.find((p) => p.id === params.id);
+  const puppy = await readPuppyById(params.id);
   if (!puppy) {
     notFound();
   }
@@ -49,8 +40,13 @@ export default async function PuppyPage(props: {
           <h1 className="text-5xl font-extrabold text-gray-900">
             {puppy.name}
           </h1>
-          <p className="mt-4 text-2xl text-gray-700">
-            {formatPuppyPrice(puppy.price)}
+          {puppy.status !== "adopted" ? (
+            <p className="mt-4 text-2xl text-gray-700">
+              {formatPuppyPrice(puppy)}
+            </p>
+          ) : null}
+          <p className="mt-2 text-sm uppercase tracking-[0.25em] text-emerald-700">
+            {puppy.status}
           </p>
           <div className="mt-6 space-y-2 text-lg text-gray-800">
             <p>
@@ -65,31 +61,57 @@ export default async function PuppyPage(props: {
             <p>
               <strong>Skills:</strong> {puppy.skills}
             </p>
+            {puppy.status !== "adopted" ? (
+              <p>
+                <strong>Reservation Deposit:</strong> $
+                {puppy.depositAmount.toLocaleString()} USD
+              </p>
+            ) : null}
+            {puppy.payment?.depositPaidAmount ? (
+              <p>
+                <strong>Remaining Balance:</strong> $
+                {getRemainingBalance(puppy).toLocaleString()} USD
+              </p>
+            ) : null}
           </div>
 
-          {/* Action buttons */}
-          <div className="mt-8 flex flex-wrap gap-4 max-w-150 max-sm:justify-center">
+          <div className="mt-8 max-w-xl rounded-4xl border border-emerald-100 bg-stone-50 px-6 py-5 shadow-sm">
+            <p className="text-sm uppercase tracking-[0.3em] text-emerald-700">
+              Reservation
+            </p>
+            <p className="mt-2 text-base text-gray-700">
+              Secure your puppy with a Stripe-hosted deposit checkout. The
+              deposit is applied toward the final adoption fee, and the
+              remaining balance can be sent later through a secure Stripe
+              invoice.
+            </p>
+            <div className="mt-5">
+              <PuppyReserveButton puppy={puppy} />
+            </div>
+          </div>
+
+          <div className="mt-8 flex flex-wrap gap-4 max-sm:justify-center">
             <Link
               href="/care"
-              className="px-6 py-3 w-52 h-12 bg-emerald-600 text-white font-medium rounded-full hover:bg-emerald-500 transition text-xl flex items-center justify-center"
+              className="px-6 py-3 w-70 h-12 bg-emerald-600 text-white font-medium rounded-full hover:bg-emerald-500 transition text-xl flex items-center justify-center"
             >
               Care
             </Link>
             <Link
               href="/#contact"
-              className="px-6 py-3 w-52 h-12 bg-emerald-600 text-white font-medium rounded-full hover:bg-emerald-500 transition text-xl flex items-center justify-center"
+              className="px-6 py-3 w-70 h-12 bg-emerald-600 text-white font-medium rounded-full hover:bg-emerald-500 transition text-xl flex items-center justify-center"
             >
               Adopt
             </Link>
             <Link
               href="/blog"
-              className="px-6 py-3 w-52 h-12 bg-emerald-600 text-white font-medium rounded-full hover:bg-emerald-500 transition text-xl flex items-center justify-center"
+              className="px-6 py-3 w-70 h-12 bg-emerald-600 text-white font-medium rounded-full hover:bg-emerald-500 transition text-xl flex items-center justify-center"
             >
               Blog
             </Link>
             <Link
               href="/faq"
-              className="px-6 py-3 w-52 h-12 bg-emerald-600 text-white font-medium rounded-full hover:bg-emerald-500 transition text-xl flex items-center justify-center"
+              className="px-6 py-3 w-70 h-12 bg-emerald-600 text-white font-medium rounded-full hover:bg-emerald-500 transition text-xl flex items-center justify-center"
             >
               FAQ
             </Link>

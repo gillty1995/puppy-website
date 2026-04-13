@@ -1,15 +1,15 @@
 // components/Header.tsx
 "use client";
 
+import Link from "next/link";
 import {
   AnimatePresence,
   motion,
   useScroll,
   useTransform,
 } from "framer-motion";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { useAdmin } from "@/app/context/AdminContext";
 
 export default function Header() {
   const { scrollY } = useScroll();
@@ -22,12 +22,9 @@ export default function Header() {
   // collapse title section height from 200px → 0
   const titleMaxHeight = useTransform(scrollY, [0, 150], [200, 0]);
 
-  const { isAdmin } = useAdmin();
-  const blogHref = isAdmin ? "/admin/blog" : "/blog";
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Smooth scroll handler for nav links
-  const handleNavClick = useCallback((section: string, e: React.MouseEvent) => {
+  function handleNavClick(section: string, e: React.MouseEvent) {
     e.preventDefault();
     const id = section === "Home" ? "hero" : section.toLowerCase();
     const el = document.getElementById(id);
@@ -38,7 +35,7 @@ export default function Header() {
       top: topOfSection - collapsedHeaderHeight,
       behavior: "smooth",
     });
-  }, []);
+  }
 
   return (
     <motion.header
@@ -75,9 +72,9 @@ export default function Header() {
           </div>
           <ul className="hidden md:flex space-x-8 text-sm font-medium text-gray-700">
             <li>
-              <a href={blogHref} className="hover:underline">
+              <Link href="/blog" className="hover:underline">
                 Blog
-              </a>
+              </Link>
             </li>
             <li>
               <a href="/adoptions" className="hover:underline">
@@ -138,13 +135,13 @@ export default function Header() {
                   )
                 )}
                 <li>
-                  <a
-                    href={blogHref}
+                  <Link
+                    href="/blog"
                     onClick={() => setMenuOpen(false)}
                     className="block text-lg hover:underline"
                   >
                     Blog
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <a

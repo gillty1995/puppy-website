@@ -1,9 +1,11 @@
-// components/PuppyGallery.tsx
-"use client";
+import { unstable_noStore as noStore } from "next/cache";
 import PuppyCard from "./PuppyCard";
-import { puppies } from "@/utils/PuppyData";
+import { readPuppies } from "@/data/puppies";
 
-export default function PuppyGallery() {
+export default async function PuppyGallery() {
+  noStore();
+  const puppies = await readPuppies();
+
   return (
     <section
       id="puppies"
@@ -18,7 +20,8 @@ export default function PuppyGallery() {
                   id={p.id}
                   name={p.name}
                   image={p.image}
-                  price={p.price}
+                  price={p.currentPrice}
+                  status={p.status}
                 />
               </div>
             </div>
@@ -31,7 +34,8 @@ export default function PuppyGallery() {
             id={p.id}
             name={p.name}
             image={p.image}
-            price={p.price}
+            price={p.currentPrice}
+            status={p.status}
           />
         );
       })}

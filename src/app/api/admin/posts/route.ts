@@ -9,6 +9,7 @@ import { readPosts, writePosts, Post } from "@/data/posts";
 import { Queue } from "bullmq";
 import IORedis from "ioredis";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { requireAdminApi } from "@/lib/admin";
 
 sharp.cache(false);
 sharp.concurrency(1);
@@ -34,12 +35,18 @@ async function ensureUploadsDir(): Promise<string> {
 
 // LIST POSTS
 export async function GET() {
+  const unauthorized = await requireAdminApi();
+  if (unauthorized) return unauthorized;
+
   const posts = await readPosts();
   return NextResponse.json(posts);
 }
 
 // UPLOAD POSTS
 export async function POST(request: NextRequest) {
+  const unauthorized = await requireAdminApi();
+  if (unauthorized) return unauthorized;
+
   const formData = await request.formData();
   const title = formData.get("title")?.toString() || "";
   const body = formData.get("body")?.toString() || "";

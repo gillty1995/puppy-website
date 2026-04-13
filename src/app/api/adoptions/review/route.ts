@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
+import { requireAdminApi } from "@/lib/admin";
 
 const pendingPath = path.join(process.cwd(), "src", "data", "pendingReviews.json");
 
@@ -19,6 +20,9 @@ export async function POST(request: Request) {
 }
 
 export async function GET() {
+  const unauthorized = await requireAdminApi();
+  if (unauthorized) return unauthorized;
+
   const raw = await fs.readFile(pendingPath, "utf-8");
   return NextResponse.json(JSON.parse(raw));
 }

@@ -85,6 +85,12 @@ export default function AdminBlogPage() {
         >
           &larr; Back to Home
         </Link>
+        <Link
+          href="/admin/puppies"
+          className="text-emerald-700 hover:underline block mb-8"
+        >
+          Manage Puppy Pricing & Payments
+        </Link>
 
         <div className="bg-white p-8 rounded-lg shadow">
           <h1 className="text-3xl font-serif text-gray-900 mb-6">

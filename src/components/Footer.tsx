@@ -1,13 +1,11 @@
 // components/Footer.tsx
 "use client";
 
-import { useState } from "react";
-import LoginModal from "./LoginModal";
-import { useAdmin } from "@/app/context/AdminContext";
+import Link from "next/link";
+import { SignOutButton, UserButton, useAuth } from "@clerk/nextjs";
 
 export default function Footer() {
-  const { isAdmin, login, logout } = useAdmin();
-  const [showLogin, setShowLogin] = useState(false);
+  const { isLoaded, isSignedIn } = useAuth();
 
   return (
     <footer className="py-8 bg-zinc-900 text-gray-300">
@@ -39,42 +37,46 @@ export default function Footer() {
         </div>
 
         <div className="flex items-center space-x-4">
-          {!isAdmin ? (
-            <button
-              onClick={() => setShowLogin(true)}
-              className="px-3 py-1 border border-black rounded text-black hover:bg-black hover:text-white transition"
+          {!isLoaded || !isSignedIn ? (
+            <Link
+              href="/sign-in"
+              prefetch={false}
+              className="px-3 py-1 border border-emerald-400 rounded text-emerald-400 hover:bg-emerald-500 hover:text-white transition"
             >
-              Admin
-            </button>
+              Admin Sign In
+            </Link>
           ) : (
             <>
-              <a
-                href="/admin/reviews"
-                className="px-3 py-1 border border-emerald-400 rounded text-emerald-400 hover:bg-emerald-500 hover:text-white transition"
-              >
-                Admin Reviews
-              </a>
-              <button
-                onClick={logout}
-                className="px-3 py-1 border border-red-400 rounded text-red-400 hover:bg-red-500 hover:text-white transition"
-              >
+            <Link
+              href="/admin/puppies"
+              prefetch={false}
+              className="px-3 py-1 border border-emerald-400 rounded text-emerald-400 hover:bg-emerald-500 hover:text-white transition"
+            >
+              Admin Puppies
+            </Link>
+            <Link
+              href="/admin/reviews"
+              prefetch={false}
+              className="px-3 py-1 border border-emerald-400 rounded text-emerald-400 hover:bg-emerald-500 hover:text-white transition"
+            >
+              Admin Reviews
+            </Link>
+            <UserButton
+              appearance={{
+                elements: {
+                  avatarBox: "h-9 w-9",
+                },
+              }}
+            />
+            <SignOutButton>
+              <button className="px-3 py-1 border border-red-400 rounded text-red-400 hover:bg-red-500 hover:text-white transition">
                 Log Out
               </button>
+            </SignOutButton>
             </>
           )}
         </div>
       </div>
-
-      {/* Login modal */}
-      {showLogin && !isAdmin && (
-        <LoginModal
-          onClose={() => setShowLogin(false)}
-          onLoginSuccess={() => {
-            login();
-            setShowLogin(false);
-          }}
-        />
-      )}
     </footer>
   );
 }
