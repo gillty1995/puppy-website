@@ -4,6 +4,8 @@ export interface PublicComment {
   createdAt: string;
 }
 
+export type StoredComment = PublicComment;
+
 export function maskEmailAddress(email: string): string {
   const [local, domain] = email.split("@");
   if (!local || !domain) return "anonymous";
@@ -15,14 +17,43 @@ export function maskEmailAddress(email: string): string {
   return `${visiblePart}${hiddenPart}@${domain}`;
 }
 
-export function toPublicComment(comment: {
-  email: string;
-  comment: string;
-  createdAt: string;
-}): PublicComment {
+export type CommentLike = {
+  email?: string;
+  maskedEmail?: string;
+  comment?: string;
+  createdAt?: string;
+};
+
+export function normalizeComment(comment: CommentLike): StoredComment {
+  const maskedEmail =
+    typeof comment.maskedEmail === "string" && comment.maskedEmail.trim()
+      ? comment.maskedEmail.trim()
+      : typeof comment.email === "string" && comment.email.trim()
+        ? maskEmailAddress(comment.email.trim())
+        : "anonymous";
+
   return {
-    maskedEmail: maskEmailAddress(comment.email),
-    comment: comment.comment,
-    createdAt: comment.createdAt,
+    maskedEmail,
+    comment: typeof comment.comment === "string" ? comment.comment : "",
+    createdAt:
+      typeof comment.createdAt === "string" && comment.createdAt.trim()
+        ? comment.createdAt
+        : new Date().toISOString(),
   };
+}
+
+export function createStoredComment(
+  email: string,
+  comment: string,
+  createdAt = new Date().toISOString()
+): StoredComment {
+  return {
+    maskedEmail: maskEmailAddress(email),
+    comment,
+    createdAt,
+  };
+}
+
+export function toPublicComment(comment: CommentLike): PublicComment {
+  return normalizeComment(comment);
 }
