@@ -1,7 +1,11 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { readPosts, writePosts, Comment } from "@/data/posts";
-import { toPublicComment } from "@/lib/commentPrivacy";
+import { appendCommentLead } from "@/data/commentLeads";
+import {
+  createStoredComment,
+  toPublicComment,
+} from "@/lib/commentPrivacy";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
@@ -118,15 +122,18 @@ export async function POST(
     return NextResponse.json({ error: "Post not found" }, { status: 404 });
   }
 
-  const newComment: Comment = {
-    email,
-    comment,
-    createdAt: new Date().toISOString(),
-  };
+  const newComment: Comment = createStoredComment(email, comment);
 
   posts[idx].comments = posts[idx].comments ?? [];
   posts[idx].comments.push(newComment);
   await writePosts(posts);
+  await appendCommentLead({
+    postId: posts[idx].id,
+    postTitle: posts[idx].title,
+    email,
+    comment,
+    createdAt: newComment.createdAt,
+  });
 
   return NextResponse.json(toPublicComment(newComment));
 }

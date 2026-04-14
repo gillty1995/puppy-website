@@ -48,6 +48,8 @@ next-env.d.ts
 
 # ignore all committed posts data
 /src/data/posts.json
+/src/data/commentLeads.json
+/exports/
 
 # ignore scripts folder
 /scripts/# toolchain/binaries accidentally added
