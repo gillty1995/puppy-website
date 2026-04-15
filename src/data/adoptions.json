@@ -28,7 +28,7 @@
   {
     "id": "3",
     "details": "Sea Silk with her new family!",
-    "photo": "/images/adoption3.jpeg",
+    "photo": "/images/adoption3.jpg",
     "reviews": [
       {
         "adoptionId": "3",
@@ -40,13 +40,13 @@
   },
   {
     "id": "4",
-    "details": "Suede with her new family!",
+    "details": "Suede with his new family!",
     "photo": "/images/adoption4.jpeg",
     "reviews": []
   },
   {
     "id": "5",
-    "details": "Saye with her new family!",
+    "details": "Saye with his new family!",
     "photo": "/images/adoption5.jpeg",
     "reviews": []
   }
