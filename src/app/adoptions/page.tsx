@@ -58,12 +58,21 @@ export default function AdoptionsPage() {
               >
                 {/* Image and details - always centered on mobile/tablet */}
                 <div className="lg:w-2/3 w-full flex flex-col items-center max-[1025px]:items-center max-[1025px]:justify-center">
+                  <div className="relative w-full overflow-hidden rounded mb-4 aspect-square lg:hidden">
+                    <StaticImg
+                      src={a.photo}
+                      alt={a.details}
+                      fill
+                      sizes="100vw"
+                      className="object-cover"
+                    />
+                  </div>
                   <StaticImg
                     src={a.photo}
                     alt={a.details}
                     width={400}
                     height={800}
-                    className="w-full h-140 object-cover rounded mb-4"
+                    className="hidden lg:block w-full h-140 object-cover rounded mb-4"
                   />
                   <h2 className="text-center text-lg text-gray-700 mb-2">
                     {a.details}
