@@ -1,5 +1,8 @@
 import type { PuppyRecord } from "@/data/puppies";
 
+export const DEFAULT_PUPPY_SKILLS =
+  "Once old enough, our puppies learn potty training by being taken outside immediately after meals and staying out until they relieve themselves, which consistently reinforces proper bathroom habits. Thanks to early, positive exposure to new people and environments, they develop social skills that help them grow into friendly, confident dogs unafraid of strangers or unfamiliar situations.";
+
 export const defaultPuppies: PuppyRecord[] = [
   {
     id: "puppy1",
@@ -12,8 +15,7 @@ export const defaultPuppies: PuppyRecord[] = [
     color: "Clear Orange",
     description:
       "Puppies are known to undergo color changes as they grow, this change is a normal part of their growth and can happen between 4 and 6 months of age.",
-    skills:
-      "Once old enough, our puppies learn potty training by being taken outside immediately after meals and staying out until they relieve themselves, which consistently reinforces proper bathroom habits. Thanks to early, positive exposure to new people and environments, they develop social skills that help them grow into friendly, confident dogs unafraid of strangers or unfamiliar situations.",
+    skills: DEFAULT_PUPPY_SKILLS,
   },
   {
     id: "puppy2",
@@ -26,8 +28,7 @@ export const defaultPuppies: PuppyRecord[] = [
     color: "True White",
     description:
       "Some poms are actually a very pale cream, appearing white as puppies but developing richer cream tones as adults. Puppies are known to undergo color changes as they grow, this change is a normal part of their growth and can happen between 4 and 6 months of age.",
-    skills:
-      "Once old enough, our puppies learn potty training by being taken outside immediately after meals and staying out until they relieve themselves, which consistently reinforces proper bathroom habits. Thanks to early, positive exposure to new people and environments, they develop social skills that help them grow into friendly, confident dogs unafraid of strangers or unfamiliar situations.",
+    skills: DEFAULT_PUPPY_SKILLS,
   },
   {
     id: "puppy3",
@@ -40,8 +41,7 @@ export const defaultPuppies: PuppyRecord[] = [
     color: "White",
     description:
       "Please be aware that Pomeranian puppies are known to undergo color changes as they grow. Many white newborns will mature into cream or orange Pomeranians. This change is a normal part of their growth and can happen between 4 and 6 months of age.",
-    skills:
-      "Once old enough, our puppies learn potty training by being taken outside immediately after meals and staying out until they relieve themselves, which consistently reinforces proper bathroom habits. Thanks to early, positive exposure to new people and environments, they develop social skills that help them grow into friendly, confident dogs unafraid of strangers or unfamiliar situations.",
+    skills: DEFAULT_PUPPY_SKILLS,
   },
   {
     id: "puppy4",
@@ -54,8 +54,7 @@ export const defaultPuppies: PuppyRecord[] = [
     color: "Cream",
     description:
       "Puppies are known to undergo color changes as they grow, this change is a normal part of their growth and can happen between 4 and 6 months of age.",
-    skills:
-      "Once old enough, our puppies learn potty training by being taken outside immediately after meals and staying out until they relieve themselves, which consistently reinforces proper bathroom habits. Thanks to early, positive exposure to new people and environments, they develop social skills that help them grow into friendly, confident dogs unafraid of strangers or unfamiliar situations.",
+    skills: DEFAULT_PUPPY_SKILLS,
   },
   {
     id: "puppy5",
@@ -68,7 +67,6 @@ export const defaultPuppies: PuppyRecord[] = [
     color: "Piebald Parti-Pom",
     description:
       "Predominantly white, with patches of black on his ears. Puppies are known to undergo color changes as they grow, this change is a normal part of their growth and can happen between 4 and 6 months of age.",
-    skills:
-      "Once old enough, our puppies learn potty training by being taken outside immediately after meals and staying out until they relieve themselves, which consistently reinforces proper bathroom habits. Thanks to early, positive exposure to new people and environments, they develop social skills that help them grow into friendly, confident dogs unafraid of strangers or unfamiliar situations.",
+    skills: DEFAULT_PUPPY_SKILLS,
   },
 ];

@@ -2,6 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { resolvePuppyImageSrc } from "@/lib/puppyImageSrc";
 
 interface PuppyCardProps {
   id: string;
@@ -38,7 +39,7 @@ export default function PuppyCard({
           transition={{ type: "spring", stiffness: 300 }}
         >
           <Image
-            src={image}
+            src={resolvePuppyImageSrc(image)}
             alt={name}
             width={400}
             height={580}

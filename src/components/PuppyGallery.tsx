@@ -1,10 +1,15 @@
 import { unstable_noStore as noStore } from "next/cache";
 import PuppyCard from "./PuppyCard";
 import { readPuppies } from "@/data/puppies";
+import PuppyWaitlistCta from "@/components/PuppyWaitlistCta";
 
 export default async function PuppyGallery() {
   noStore();
   const puppies = await readPuppies();
+
+  if (puppies.length === 0) {
+    return <PuppyWaitlistCta />;
+  }
 
   return (
     <section
