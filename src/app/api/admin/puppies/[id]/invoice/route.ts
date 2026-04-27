@@ -1,5 +1,10 @@
 import { NextResponse } from "next/server";
-import { getRemainingBalance, readPuppies, writePuppies } from "@/data/puppies";
+import {
+  getRemainingBalance,
+  readPuppyById,
+  readAllPuppies,
+  writePuppies,
+} from "@/data/puppies";
 import { requireAdminApi } from "@/lib/admin";
 import { getStripe } from "@/lib/stripe";
 
@@ -16,13 +21,16 @@ export async function POST(
       email: undefined,
     }));
 
-    const puppies = await readPuppies();
-    const index = puppies.findIndex((puppy) => puppy.id === id);
-    if (index === -1) {
+    const puppy = await readPuppyById(id);
+    if (!puppy) {
       return NextResponse.json({ error: "Puppy not found." }, { status: 404 });
     }
 
-    const puppy = puppies[index];
+    const allPuppies = await readAllPuppies();
+    const index = allPuppies.findIndex((entry) => entry.id === id);
+    if (index === -1) {
+      return NextResponse.json({ error: "Puppy not found." }, { status: 404 });
+    }
     const email = emailOverride || puppy.payment?.reservedByEmail;
     const remainingBalance = getRemainingBalance(puppy);
 
@@ -79,10 +87,10 @@ export async function POST(
 
     const sentInvoice = await stripe.invoices.sendInvoice(invoice.id);
 
-    puppies[index] = {
-      ...puppy,
+    allPuppies[index] = {
+      ...allPuppies[index],
       payment: {
-        ...puppy.payment,
+        ...allPuppies[index].payment,
         reservedByEmail: email,
         stripeCustomerId: customer.id,
         finalInvoiceId: sentInvoice.id,
@@ -91,7 +99,7 @@ export async function POST(
       },
     };
 
-    await writePuppies(puppies);
+    await writePuppies(allPuppies);
 
     return NextResponse.json({
       invoiceId: sentInvoice.id,

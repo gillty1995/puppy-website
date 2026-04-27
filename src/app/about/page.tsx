@@ -6,10 +6,7 @@ export default function AboutPage() {
     <section id="about" className="py-16 bg-gray-50 px-6 md:px-20">
       <div className="mx-auto max-w-4xl">
         {/* Back to Home */}
-        <Link
-          href="/#home"
-          className="text-black hover:underline block mb-8"
-        >
+        <Link href="/#home" className="text-black hover:underline block mb-8">
           &larr; Back to Home
         </Link>
 
@@ -77,7 +74,7 @@ export default function AboutPage() {
             Check out our blog for additional pictures, stories, and more!
           </p>
           <Link href="/blog">
-            <button className="px-6 py-3 bg-emerald-600 text-white font-medium rounded-full hover:bg-emerald-500 transition">
+            <button className="px-6 py-3 bg-emerald-600 cursor-pointer text-white font-medium rounded-full hover:bg-emerald-500 transition">
               Visit Our Blog
             </button>
           </Link>

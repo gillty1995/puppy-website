@@ -91,6 +91,12 @@ export default function AdminBlogPage() {
         >
           Manage Puppy Pricing & Payments
         </Link>
+        <Link
+          href="/admin/waitlist"
+          className="text-amber-700 hover:underline block mb-8"
+        >
+          Manage Waitlist CRM
+        </Link>
 
         <div className="bg-white p-8 rounded-lg shadow">
           <h1 className="text-3xl font-serif text-gray-900 mb-6">

@@ -49,5 +49,17 @@
     "details": "Saye with his new family!",
     "photo": "/images/adoption5.jpeg",
     "reviews": []
+  },
+  {
+    "id": "6",
+    "details": "Satin with her new family!",
+    "photo": "/images/adoption6.jpeg",
+    "reviews": []
+  },
+  {
+    "id": "7",
+    "details": "Sable with his new family!",
+    "photo": "/images/adoption7.jpeg",
+    "reviews": []
   }
 ]

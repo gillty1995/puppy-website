@@ -7,6 +7,7 @@ import {
   getRemainingBalance,
   readPuppyById,
 } from "@/data/puppies";
+import { resolvePuppyImageSrc } from "@/lib/puppyImageSrc";
 import PuppyReserveButton from "@/components/PuppyReserveButton";
 
 export default async function PuppyPage(props: {
@@ -27,7 +28,7 @@ export default async function PuppyPage(props: {
       <div className="mt-8 flex flex-col lg:flex-row items-start gap-12">
         <div className="w-full lg:w-1/2 rounded-2xl overflow-hidden shadow-lg">
           <Image
-            src={puppy.image}
+            src={resolvePuppyImageSrc(puppy.image)}
             alt={puppy.name}
             width={800}
             height={800}
