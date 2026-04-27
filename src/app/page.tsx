@@ -6,11 +6,15 @@ import Footer from "../components/Footer";
 import Header from "@/components/Header";
 import PuppyGallery from "@/components/PuppyGallery";
 import Litters from "../components/Litters";
+import { readPuppies } from "@/data/puppies";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const puppies = await readPuppies();
+  const puppyHref = puppies.length === 0 ? "/#waitlist" : "/#puppies";
+
   return (
     <main>
-      <Header />
+      <Header puppyHref={puppyHref} />
       <Hero />
       <section id="parents">
         {/* Cashmere (mom) */}

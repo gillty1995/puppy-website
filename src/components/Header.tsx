@@ -11,7 +11,11 @@ import {
 import { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 
-export default function Header() {
+export default function Header({
+  puppyHref = "/#puppies",
+}: {
+  puppyHref?: string;
+}) {
   const { scrollY } = useScroll();
   // collapse header padding from 64px → 16px
   const paddingY = useTransform(scrollY, [0, 150], [64, 16]);
@@ -53,6 +57,10 @@ export default function Header() {
               <li key={link}>
                 {link === "Care" ? (
                   <a href="/care" className="hover:underline">
+                    {link}
+                  </a>
+                ) : link === "Puppies" ? (
+                  <a href={puppyHref} className="hover:underline">
                     {link}
                   </a>
                 ) : (
@@ -114,6 +122,14 @@ export default function Header() {
                       {link === "Care" ? (
                         <a
                           href="/care"
+                          onClick={() => setMenuOpen(false)}
+                          className="block text-lg hover:underline"
+                        >
+                          {link}
+                        </a>
+                      ) : link === "Puppies" ? (
+                        <a
+                          href={puppyHref}
                           onClick={() => setMenuOpen(false)}
                           className="block text-lg hover:underline"
                         >
