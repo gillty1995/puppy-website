@@ -47,6 +47,14 @@ function createPuppyId(base?: string) {
   return `${base || "puppy"}-${randomUUID()}`;
 }
 
+function dedupePuppiesById(puppies: PuppyRecord[]): PuppyRecord[] {
+  const deduped = new Map<string, PuppyRecord>();
+  for (const puppy of puppies) {
+    deduped.set(puppy.id, puppy);
+  }
+  return Array.from(deduped.values());
+}
+
 function normalizePuppy(puppy: Partial<PuppyRecord>, fallbackLitterId?: string): PuppyRecord {
   return {
     id: typeof puppy.id === "string" && puppy.id ? puppy.id : createPuppyId(),
@@ -103,7 +111,7 @@ export async function readAllPuppies(): Promise<PuppyRecord[]> {
     const raw = await fs.readFile(filePath, "utf-8");
     const parsed = JSON.parse(raw);
     if (Array.isArray(parsed)) {
-      return parsed.map((entry) => normalizePuppy(entry));
+      return dedupePuppiesById(parsed.map((entry) => normalizePuppy(entry)));
     }
     return [];
   } catch (err) {
@@ -128,7 +136,7 @@ export async function readArchivedPuppies(): Promise<PuppyRecord[]> {
 }
 
 export async function writePuppies(puppies: PuppyRecord[]): Promise<void> {
-  const sanitized = puppies.map((puppy) => normalizePuppy(puppy));
+  const sanitized = dedupePuppiesById(puppies.map((puppy) => normalizePuppy(puppy)));
   await fs.writeFile(filePath, JSON.stringify(sanitized, null, 2));
 }
 
@@ -222,6 +230,17 @@ export async function archivePuppy(id: string): Promise<PuppyRecord | undefined>
 
   await writePuppies(puppies);
   return puppies[index];
+}
+
+export async function deletePuppyRecord(id: string): Promise<boolean> {
+  const puppies = await readAllPuppies();
+  const next = puppies.filter((puppy) => puppy.id !== id);
+  if (next.length === puppies.length) {
+    return false;
+  }
+
+  await writePuppies(next);
+  return true;
 }
 
 export async function resetCurrentLitter(): Promise<PuppyRecord[]> {

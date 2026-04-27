@@ -1,15 +1,9 @@
-import fs from "fs";
-import path from "path";
-import React from "react";
 import Link from "next/link";
-import Image from "next/image";
+import StaticImg from "@/components/StaticImg";
+import { getPreviousLitter } from "@/data/previousLitters";
 
-const LITTER_PUPPIES: Record<string, { slug: string; name: string }[]> = {
-  "litter-2025": [
-    { slug: "canvas", name: "Canvas" },
-    { slug: "cotton", name: "Cotton" },
-  ],
-};
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function LitterPage({
   params,
@@ -17,28 +11,7 @@ export default async function LitterPage({
   params: Promise<{ litter: string }>;
 }) {
   const { litter } = await params;
-  const puppies = LITTER_PUPPIES[litter] || [];
-
-  const imagesDir = path.join(process.cwd(), "public", "images");
-  let files: string[] = [];
-  try {
-    files = fs.readdirSync(imagesDir);
-  } catch {
-    files = [];
-  }
-
-  const puppyData = puppies.map((p) => {
-    const matches = files
-      .filter((f) => f.toLowerCase().includes(p.slug.toLowerCase()))
-      .map((f) => `/images/${f}`);
-
-    return {
-      slug: p.slug,
-      name: p.name,
-      images: matches,
-      thumb: matches.length ? matches[0] : "/images/coming-soon.jpg",
-    };
-  });
+  const litterData = await getPreviousLitter(litter);
 
   return (
     <section
@@ -54,14 +27,7 @@ export default async function LitterPage({
         </Link>
 
         <h1 className="text-4xl font-serif text-gray-900 mb-8 text-center max-sm:mt-10">
-          {litter
-            .replace(/-/g, " ")
-            .split(" ")
-            .map((w: string) =>
-              w ? w.charAt(0).toUpperCase() + w.slice(1) : w
-            )
-            .join(" ")}{" "}
-          Gallery
+          {litterData?.summary.title || litter.replace(/-/g, " ")} Gallery
         </h1>
 
         <p className="text-gray-700 mb-8">
@@ -69,31 +35,37 @@ export default async function LitterPage({
           posts.
         </p>
 
-        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {puppyData.map((p) => (
-            <Link
-              key={p.slug}
-              href={`/previous-litters/${litter}/${p.slug}`}
-              className="group block bg-white rounded-lg overflow-hidden shadow hover:shadow-lg transition"
-            >
-              <div className="aspect-square w-full bg-zinc-100">
-                <Image
-                  src={p.thumb}
-                  alt={p.name}
-                  width={600}
-                  height={600}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                />
-              </div>
+        {litterData?.puppies?.length ? (
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {litterData.puppies.map((p) => (
+              <Link
+                key={`${litter}-${p.slug}`}
+                href={`/previous-litters/${litter}/${p.slug}`}
+                className="group block bg-white rounded-lg overflow-hidden shadow hover:shadow-lg transition"
+              >
+                <div className="aspect-square w-full bg-zinc-100">
+                  <StaticImg
+                    src={p.image}
+                    alt={p.name}
+                    width={600}
+                    height={600}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                  />
+                </div>
 
-              <div className="p-3">
-                <h3 className="text-sm font-semibold text-gray-900">
-                  {p.name}
-                </h3>
-              </div>
-            </Link>
-          ))}
-        </div>
+                <div className="p-3">
+                  <h3 className="text-sm font-semibold text-gray-900">
+                    {p.name}
+                  </h3>
+                </div>
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <div className="rounded-3xl border border-stone-200 bg-white px-6 py-10 text-gray-600 shadow-sm">
+            This litter has no archived puppies yet.
+          </div>
+        )}
       </div>
     </section>
   );

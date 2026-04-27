@@ -94,9 +94,9 @@ export default function AdminPuppiesPage() {
     createEmptyFileState()
   );
   const [editFiles, setEditFiles] = useState<Record<string, File | null>>({});
-  const [editPreviews, setEditPreviews] = useState<Record<string, string | null>>(
-    {}
-  );
+  const [editPreviews, setEditPreviews] = useState<
+    Record<string, string | null>
+  >({});
 
   const activePuppies = useMemo(
     () => puppies.filter((puppy) => !puppy.archivedAt),
@@ -176,11 +176,7 @@ export default function AdminPuppiesPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function updateDraft(
-    id: string,
-    field: keyof PuppyFormState,
-    value: string
-  ) {
+  function updateDraft(id: string, field: keyof PuppyFormState, value: string) {
     setDrafts((current) => ({
       ...current,
       [id]: {
@@ -211,8 +207,14 @@ export default function AdminPuppiesPage() {
       formData.append("color", draft.color);
       formData.append("description", draft.description);
       formData.append("skills", draft.skills);
-      formData.append("reservedByEmail", resetPayment ? "" : draft.reservedByEmail);
-      formData.append("reservedByName", resetPayment ? "" : draft.reservedByName);
+      formData.append(
+        "reservedByEmail",
+        resetPayment ? "" : draft.reservedByEmail
+      );
+      formData.append(
+        "reservedByName",
+        resetPayment ? "" : draft.reservedByName
+      );
       formData.append("resetPayment", resetPayment ? "true" : "false");
 
       const file = editFiles[puppy.id];
@@ -294,6 +296,30 @@ export default function AdminPuppiesPage() {
       await fetchPuppies();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unable to archive puppy.");
+    } finally {
+      setArchivingId(null);
+    }
+  }
+
+  async function purgeArchivedPuppy(puppy: PuppyAdminRecord) {
+    if (!confirm("Permanently delete this archived puppy record?")) return;
+
+    try {
+      setError(null);
+      setArchivingId(puppy.id);
+      const response = await fetch(`/api/admin/puppies/${puppy.id}/purge`, {
+        method: "DELETE",
+      });
+      const payload = await response.json();
+      if (!response.ok) {
+        throw new Error(payload.error || "Unable to delete archived puppy.");
+      }
+
+      await fetchPuppies();
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Unable to delete archived puppy."
+      );
     } finally {
       setArchivingId(null);
     }
@@ -414,7 +440,7 @@ export default function AdminPuppiesPage() {
               type="button"
               onClick={resetLitter}
               disabled={resettingLitter}
-              className="rounded-full border border-amber-500 px-5 py-3 text-sm font-medium text-amber-700 transition hover:bg-amber-50 disabled:cursor-not-allowed disabled:border-amber-200 disabled:text-amber-300"
+              className="rounded-full border cursor-pointer border-amber-500 px-5 py-3 text-sm font-medium text-amber-700 transition hover:bg-amber-50 disabled:cursor-not-allowed disabled:border-amber-200 disabled:text-amber-300"
             >
               {resettingLitter ? "Resetting Litter..." : "Reset Current Litter"}
             </button>
@@ -576,7 +602,9 @@ export default function AdminPuppiesPage() {
               <textarea
                 rows={5}
                 value={createForm.description}
-                onChange={(e) => updateCreateForm("description", e.target.value)}
+                onChange={(e) =>
+                  updateCreateForm("description", e.target.value)
+                }
                 className="w-full rounded-3xl border border-stone-300 px-4 py-3 text-gray-900 outline-none transition focus:border-emerald-500"
                 placeholder="Short description for the puppy card..."
               />
@@ -605,7 +633,9 @@ export default function AdminPuppiesPage() {
               />
             </label>
             <p className="text-sm text-gray-600">
-              {createFileState.file ? createFileState.file.name : "No file selected"}
+              {createFileState.file
+                ? createFileState.file.name
+                : "No file selected"}
             </p>
           </div>
 
@@ -690,7 +720,10 @@ export default function AdminPuppiesPage() {
                             accept="image/*"
                             className="hidden"
                             onChange={(e) =>
-                              setEditPreview(puppy.id, e.target.files?.[0] || null)
+                              setEditPreview(
+                                puppy.id,
+                                e.target.files?.[0] || null
+                              )
                             }
                           />
                         </label>
@@ -964,8 +997,8 @@ export default function AdminPuppiesPage() {
                             {invoiceId === puppy.id
                               ? "Creating Invoice..."
                               : finalInvoicePaid
-                                ? "Invoice Paid"
-                                : "Send Remaining Balance Invoice"}
+                              ? "Invoice Paid"
+                              : "Send Remaining Balance Invoice"}
                           </button>
                           <button
                             type="button"
@@ -1007,8 +1040,8 @@ export default function AdminPuppiesPage() {
         <section className="mt-10">
           <h2 className="text-2xl font-bold text-gray-900">Archived History</h2>
           <p className="mt-1 text-sm text-gray-600">
-            Archived puppies stay in the record for historical reference and
-            are hidden from the public site.
+            Archived puppies stay in the record for historical reference and are
+            hidden from the public site.
           </p>
 
           {archivedPuppies.length === 0 ? (
@@ -1039,11 +1072,24 @@ export default function AdminPuppiesPage() {
                       {puppy.color} · DOB {puppy.age}
                     </p>
                     <p className="mt-3 text-sm text-stone-500">
-                      Archived {puppy.archivedAt ? new Date(puppy.archivedAt).toLocaleString() : "recently"}
+                      Archived{" "}
+                      {puppy.archivedAt
+                        ? new Date(puppy.archivedAt).toLocaleString()
+                        : "recently"}
                     </p>
                     <p className="mt-3 text-sm uppercase tracking-[0.25em] text-stone-700">
                       {puppy.status}
                     </p>
+                    <button
+                      type="button"
+                      onClick={() => purgeArchivedPuppy(puppy)}
+                      disabled={archivingId === puppy.id}
+                      className="mt-4 rounded-full border border-rose-300 px-4 py-2 text-sm font-medium text-rose-700 transition hover:bg-rose-50 disabled:cursor-not-allowed disabled:border-rose-200 disabled:text-rose-300"
+                    >
+                      {archivingId === puppy.id
+                        ? "Deleting..."
+                        : "Delete Permanently"}
+                    </button>
                   </div>
                 </article>
               ))}

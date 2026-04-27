@@ -5,58 +5,82 @@ import { motion } from "framer-motion";
 
 export default function PuppyWaitlistCta() {
   return (
-    <section className="px-6 md:px-20 py-20 bg-stone-100">
-      <div className="mx-auto max-w-5xl">
+    <section
+      id="waitlist"
+      className="relative overflow-hidden bg-stone-100 px-6 py-24 md:px-20"
+    >
+      <div className="absolute inset-0 overflow-hidden">
         <motion.div
-          className="relative overflow-hidden rounded-[2.5rem] border border-stone-200 bg-white px-6 py-14 shadow-[0_20px_60px_rgba(0,0,0,0.08)] md:px-12"
-          initial={{ opacity: 0, y: 18 }}
+          className="absolute left-[8%] top-[18%] h-40 w-40 rounded-full bg-emerald-300/20 blur-3xl"
+          animate={{ y: [0, 16, 0], x: [0, 10, 0] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute right-[12%] top-[22%] h-56 w-56 rounded-full bg-stone-300/30 blur-3xl"
+          animate={{ y: [0, -18, 0], x: [0, -12, 0] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </div>
+
+      <div className="relative mx-auto max-w-4xl text-center">
+        <motion.p
+          className="text-sm uppercase tracking-[0.35em] text-emerald-700"
+          initial={{ opacity: 0, y: 8 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.6 }}
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-white to-stone-50" />
-          <div className="relative z-10 grid gap-8 md:grid-cols-[1.2fr_0.8fr] md:items-center">
-            <div>
-              <p className="text-sm uppercase tracking-[0.35em] text-emerald-700">
-                Puppies Sold Out
-              </p>
-              <h2 className="mt-4 max-w-2xl text-4xl font-extrabold text-gray-900 md:text-6xl">
-                No puppies currently available for adoption.
-              </h2>
-              <p className="mt-5 max-w-2xl text-lg leading-8 text-gray-700">
-                Check our blog for more updates or sign up to our waitlist
-                below.
-              </p>
+          Puppies Sold Out
+        </motion.p>
+        <motion.h2
+          className="mt-5 text-4xl font-extrabold text-gray-900 md:text-6xl"
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.35 }}
+          transition={{ duration: 0.7, delay: 0.05 }}
+        >
+          No puppies currently available for adoption.
+        </motion.h2>
+        <motion.p
+          className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-gray-700"
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.35 }}
+          transition={{ duration: 0.7, delay: 0.12 }}
+        >
+          Check our blog for more updates or sign up to our waitlist below.
+        </motion.p>
 
-              <div className="mt-8 flex flex-wrap gap-4">
-                <Link
-                  href="/waitlist"
-                  className="inline-flex items-center justify-center rounded-full bg-emerald-600 px-7 py-3 text-lg font-medium text-white transition hover:bg-emerald-500"
-                >
-                  Join Our Waitlist
-                </Link>
-                <Link
-                  href="/blog"
-                  className="inline-flex items-center justify-center rounded-full border border-stone-300 px-7 py-3 text-lg font-medium text-gray-900 transition hover:bg-white"
-                >
-                  Visit Blog
-                </Link>
-              </div>
-            </div>
-
-            <div className="rounded-[2rem] border border-emerald-100 bg-stone-50 p-6 shadow-sm">
-              <p className="text-xs uppercase tracking-[0.3em] text-emerald-700">
-                Waitlist Deposit
-              </p>
-              <p className="mt-3 text-4xl font-bold text-gray-900">$500</p>
-              <p className="mt-3 text-sm leading-7 text-gray-700">
-                Hold your spot for an upcoming litter. The deposit is
-                non-refundable for 18 months and can become eligible for refund
-                if no puppy is available in that window.
-              </p>
-            </div>
-          </div>
+        <motion.div
+          className="mt-10 flex flex-wrap items-center justify-center gap-4"
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.35 }}
+          transition={{ duration: 0.6, delay: 0.18 }}
+        >
+          <Link
+            href="/waitlist"
+            className="inline-flex items-center gap-2 bg-emerald-600 text-white px-7 py-3 rounded-full shadow-lg hover:bg-emerald-500 hover:scale-110 transition text-xl font-medium"
+          >
+            Join Our Waitlist
+          </Link>
+          <Link
+            href="/blog"
+            className="inline-flex items-center justify-center rounded-full border border-stone-300 bg-white/70 px-7 py-3 text-lg font-medium text-gray-900 transition hover:bg-white"
+          >
+            Visit Blog
+          </Link>
         </motion.div>
+
+        <motion.p
+          className="mt-5 text-sm leading-7 text-gray-500"
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.35 }}
+          transition={{ duration: 0.6, delay: 0.24 }}
+        >
+          Waitlist deposit: $500, non-refundable for 18 months.
+        </motion.p>
       </div>
     </section>
   );
