@@ -5,6 +5,7 @@ import {
   type CommentLike,
   type StoredComment,
 } from "@/lib/commentPrivacy";
+import { normalizeBlogPost, type BlogPostLike } from "@/lib/blog";
 
 export interface Comment {
   maskedEmail: string;
@@ -18,6 +19,12 @@ export interface Post {
   body: string;
   images: string[];
   comments: Comment[];
+  excerpt?: string;
+  coverImage?: string;
+  featured?: boolean;
+  status?: "published" | "draft" | "archived";
+  publishedAt?: string;
+  tags?: string[];
   // optional map of generated variants keyed by original basename
   variants?: Record<string, { thumb: string; large: string }>;
 }
@@ -50,10 +57,10 @@ export async function readPosts(): Promise<Post[]> {
           needsMigration = true;
         }
 
-        return {
-          ...post,
+        return normalizeBlogPost({
+          ...(post as BlogPostLike),
           comments,
-        } as Post;
+        }) as Post;
       });
 
       if (needsMigration) {

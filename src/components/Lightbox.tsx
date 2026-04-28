@@ -3,6 +3,17 @@
 import React, { useEffect, useState } from "react";
 import StaticImg from "@/components/StaticImg";
 
+function toUploadApiUrl(value: string) {
+  if (value.startsWith("/api/uploads/")) return value;
+  if (value.startsWith("/uploads/")) {
+    return `/api/uploads/${value.replace(/^\/uploads\//, "")}`;
+  }
+  if (/^uploads\//.test(value)) {
+    return `/api/uploads/${value.replace(/^uploads\//, "")}`;
+  }
+  return value;
+}
+
 export default function Lightbox() {
   const [open, setOpen] = useState(false);
   const [images, setImages] = useState<string[]>([]);
@@ -14,19 +25,7 @@ export default function Lightbox() {
         (e as CustomEvent<{ images?: string[]; index?: number }>).detail || {};
       const imgs = detail.images || [];
       const idx = detail.index;
-      const mapped = (imgs || []).map((s: string) => {
-        const cdn = process.env.NEXT_PUBLIC_CDN_URL || "";
-        if (s.startsWith("/uploads/")) {
-          const filename = s.replace(/^\/uploads\//, "");
-          return cdn ? `${cdn}/${filename}` : `/api/uploads/${filename}`;
-        }
-        if (/^uploads\//.test(s)) {
-          return cdn
-            ? `${cdn}/${s}`
-            : `/api/uploads/${s.replace(/^uploads\//, "")}`;
-        }
-        return s;
-      });
+      const mapped = (imgs || []).map((s: string) => toUploadApiUrl(s));
       setImages(mapped);
       setIndex(typeof idx === "number" ? idx : 0);
       setOpen(true);

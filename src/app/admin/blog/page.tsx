@@ -1,23 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import StaticImg from "@/components/StaticImg";
-import ImagePreviews from "@/components/ImagePreviews";
-import EditPostForm from "@/components/EditPostForm";
+import BlogPostEditor from "@/components/BlogPostEditor";
 import { useAdminPosts } from "@/hooks/useAdminPosts";
+import {
+  getBlogImages,
+  resolveBlogImageSrc,
+  sortBlogPosts,
+} from "@/lib/blog";
 
 export default function AdminBlogPage() {
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
-  const [imageFiles, setImageFiles] = useState<File[]>([]);
-  const [previews, setPreviews] = useState<string[]>([]);
-  const [isHover, setIsHover] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
 
   const {
     posts,
-    fetchPosts,
     createPost,
     updatePost,
     deletePost,
@@ -27,192 +25,228 @@ export default function AdminBlogPage() {
     editProgress,
   } = useAdminPosts();
 
-  function onCreateFilesChanged(files: File[], urls: string[]) {
-    setImageFiles(files);
-    setPreviews(urls);
-  }
+  const orderedPosts = useMemo(() => sortBlogPosts(posts), [posts]);
+  const stats = useMemo(() => {
+    return {
+      total: orderedPosts.length,
+      featured: orderedPosts.filter((post) => post.featured).length,
+      drafts: orderedPosts.filter((post) => post.status === "draft").length,
+    };
+  }, [orderedPosts]);
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("body", body);
-    imageFiles.forEach((file) => formData.append("images", file));
+  async function handleCreate(formData: FormData) {
     try {
       await createPost(formData);
-      setTitle("");
-      setBody("");
-      setImageFiles([]);
-      setPreviews([]);
-      fetchPosts();
     } catch (err) {
       console.error(err);
       alert("Upload failed. Check console for details.");
     }
   }
 
-  async function handleDelete(id: string) {
-    if (!confirm("Delete this post?")) return;
-    await deletePost(id);
-    fetchPosts();
-  }
-
-  function startEdit(id: string) {
-    setEditingId(id);
-  }
-
-  function cancelEdit() {
-    setEditingId(null);
-  }
-
-  async function handleSaveFromForm(postId: string, formData: FormData) {
+  async function handleSave(postId: string, formData: FormData) {
     try {
       await updatePost(postId, formData);
       setEditingId(null);
-      fetchPosts();
     } catch (err) {
       console.error(err);
       alert("Save failed. Check console for details.");
     }
   }
 
+  async function handleDelete(id: string) {
+    if (!confirm("Delete this post?")) return;
+    try {
+      await deletePost(id);
+    } catch (err) {
+      console.error(err);
+      alert("Delete failed. Check console for details.");
+    }
+  }
+
   return (
-    <section id="admin-blog" className="py-16 bg-gray-50 px-6 md:px-20">
-      <div className="mx-auto max-w-4xl">
-        <Link
-          href="/#puppies"
-          className="text-black hover:underline block mb-8"
-        >
-          &larr; Back to Home
-        </Link>
-        <Link
-          href="/admin/puppies"
-          className="text-emerald-700 hover:underline block mb-8"
-        >
-          Manage Puppy Pricing & Payments
-        </Link>
-        <Link
-          href="/admin/waitlist"
-          className="text-amber-700 hover:underline block mb-8"
-        >
-          Manage Waitlist CRM
-        </Link>
+    <main className="min-h-screen bg-stone-50 px-6 py-16 md:px-10 lg:px-16">
+      <div className="mx-auto max-w-7xl">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <p className="text-sm uppercase tracking-[0.35em] text-emerald-700">
+              Admin
+            </p>
+            <h1 className="mt-3 text-4xl font-extrabold text-gray-900">
+              Blog Studio
+            </h1>
+            <p className="mt-3 max-w-3xl text-lg text-gray-700">
+              Create new stories, tune image order, and keep the public blog
+              feed aligned with the rest of the site.
+            </p>
+          </div>
 
-        <div className="bg-white p-8 rounded-lg shadow">
-          <h1 className="text-3xl font-serif text-gray-900 mb-6">
-            Admin: New Blog Post
-          </h1>
-
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <input
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="Title"
-              className="w-full p-3 border rounded focus:ring-2 focus:ring-emerald-500 text-black"
-            />
-
-            <textarea
-              value={body}
-              onChange={(e) => setBody(e.target.value)}
-              placeholder="Body"
-              rows={6}
-              className="w-full p-3 border rounded focus:ring-2 focus:ring-emerald-500 text-black"
-            />
-
-            <ImagePreviews onChange={onCreateFilesChanged} />
-
-            {previews.length > 0 && (
-              <div className="flex space-x-4 overflow-x-auto mt-4">
-                {previews.map((src, i) => (
-                  <StaticImg
-                    key={i}
-                    src={src}
-                    alt="preview"
-                    width={128}
-                    height={128}
-                    className="h-32 w-auto object-cover rounded-lg"
-                  />
-                ))}
-              </div>
-            )}
-
-            <button
-              type="submit"
-              onMouseEnter={() => setIsHover(true)}
-              onMouseLeave={() => setIsHover(false)}
-              style={{ backgroundColor: isHover ? "#10B981" : "#059669" }}
-              className="w-full text-white py-2 rounded-4xl cursor-pointer transition-colors duration-200 ease-in-out"
-              disabled={isPublishing}
+          <div className="flex flex-wrap gap-3">
+            <Link
+              href="/admin/puppies"
+              className="flex items-center justify-center rounded-full border border-emerald-500 px-5 py-3 text-sm font-medium text-emerald-700 transition hover:bg-emerald-50"
             >
-              {isPublishing
-                ? `Publishing... ${publishProgress}%`
-                : "Publish Post"}
-            </button>
-          </form>
+              Puppy CRM
+            </Link>
+            <Link
+              href="/admin/waitlist"
+              className="flex items-center justify-center rounded-full border border-amber-500 px-5 py-3 text-sm font-medium text-amber-700 transition hover:bg-amber-50"
+            >
+              Waitlist CRM
+            </Link>
+            <Link
+              href="/blog"
+              className="flex items-center justify-center rounded-full bg-gray-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-gray-800"
+            >
+              View Public Blog
+            </Link>
+          </div>
         </div>
 
-        <div className="mt-12 space-y-6">
-          <h2 className="text-2xl font-serif text-gray-900">Existing Posts</h2>
-          {posts.map((p) => (
-            <div
-              key={p.id}
-              className="bg-white p-6 rounded-lg shadow flex flex-col space-y-4"
-            >
-              <div className="flex justify-between items-start">
-                <h3 className="text-xl font-bold text-gray-900">{p.title}</h3>
-                <div className="flex items-center space-x-2">
-                  <button
-                    onClick={() => startEdit(p.id)}
-                    className="px-3 py-1 bg-amber-600 text-white rounded-full hover:bg-amber-500 transition"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDelete(p.id)}
-                    className="px-3 py-1 bg-red-600 text-white rounded-full hover:bg-red-500 transition"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
+        <div className="mt-8 grid gap-4 md:grid-cols-3">
+          <div className="rounded-[1.75rem] border border-stone-200 bg-white px-6 py-5 shadow-sm">
+            <p className="text-xs uppercase tracking-[0.3em] text-stone-500">
+              Total Posts
+            </p>
+            <p className="mt-2 text-3xl font-bold text-gray-900">{stats.total}</p>
+          </div>
+          <div className="rounded-[1.75rem] border border-stone-200 bg-white px-6 py-5 shadow-sm">
+            <p className="text-xs uppercase tracking-[0.3em] text-stone-500">
+              Featured
+            </p>
+            <p className="mt-2 text-3xl font-bold text-gray-900">
+              {stats.featured}
+            </p>
+          </div>
+          <div className="rounded-[1.75rem] border border-stone-200 bg-white px-6 py-5 shadow-sm">
+            <p className="text-xs uppercase tracking-[0.3em] text-stone-500">
+              Drafts
+            </p>
+            <p className="mt-2 text-3xl font-bold text-gray-900">
+              {stats.drafts}
+            </p>
+          </div>
+        </div>
 
-              {editingId === p.id ? (
-                <EditPostForm
-                  post={p}
-                  onCancel={cancelEdit}
-                  onSave={(formData) => handleSaveFromForm(p.id, formData)}
-                  isSaving={isSavingEdit}
-                  progress={editProgress}
-                />
-              ) : (
-                <>
-                  <div className="flex space-x-4 overflow-x-auto">
-                    {p.images.map((src) => {
-                      const filename = src.replace(/^\/uploads\//, "");
-                      return (
-                        <StaticImg
-                          key={src}
-                          src={`/api/uploads/${filename}`}
-                          alt={p.title}
-                          width={400}
-                          height={580}
-                          className="h-32 object-cover rounded"
-                        />
-                      );
-                    })}
-                  </div>
+        <section className="mt-10">
+          <BlogPostEditor
+            mode="create"
+            onSubmit={handleCreate}
+            isSaving={isPublishing}
+            progress={publishProgress}
+          />
+        </section>
 
-                  <p className="text-gray-700">
-                    {p.body.length > 200
-                      ? p.body.slice(0, 200).trim() + "…"
-                      : p.body}
-                  </p>
-                </>
-              )}
+        <section className="mt-12">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="text-sm uppercase tracking-[0.35em] text-stone-500">
+                Post Library
+              </p>
+              <h2 className="mt-2 text-3xl font-bold text-gray-900">
+                Existing posts
+              </h2>
             </div>
-          ))}
-        </div>
+          </div>
+
+          <div className="mt-6 grid gap-6">
+            {orderedPosts.map((post) => (
+              <article
+                key={post.id}
+                className="overflow-hidden rounded-[2rem] border border-stone-200 bg-white shadow-sm"
+              >
+                {editingId === post.id ? (
+                  <div className="p-4 sm:p-6">
+                    <BlogPostEditor
+                      mode="edit"
+                      post={post}
+                      onSubmit={(formData) => handleSave(post.id, formData)}
+                      onCancel={() => setEditingId(null)}
+                      isSaving={isSavingEdit}
+                      progress={editProgress}
+                    />
+                  </div>
+                ) : (
+                  <div className="grid gap-0 lg:grid-cols-[18rem_minmax(0,1fr)]">
+                    <div className="relative min-h-[14rem] bg-stone-100">
+                      <StaticImg
+                        src={resolveBlogImageSrc(
+                          post.coverImage || getBlogImages(post)[0]
+                        )}
+                        alt={post.title}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 18rem"
+                        className="object-cover"
+                      />
+                    </div>
+
+                    <div className="space-y-4 p-5 sm:p-6">
+                      <div className="flex flex-wrap items-start justify-between gap-4">
+                        <div>
+                          <div className="flex flex-wrap gap-2">
+                            <span className="rounded-full bg-stone-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-stone-700">
+                              {post.status}
+                            </span>
+                            {post.featured ? (
+                              <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-amber-800">
+                                Featured
+                              </span>
+                            ) : null}
+                          </div>
+                          <h3 className="mt-3 text-2xl font-bold text-gray-900">
+                            {post.title}
+                          </h3>
+                          <p className="mt-2 max-w-3xl text-sm leading-6 text-stone-600">
+                            {post.excerpt}
+                          </p>
+                        </div>
+
+                        <div className="flex flex-wrap gap-2">
+                          <button
+                            type="button"
+                            onClick={() => setEditingId(post.id)}
+                            className="rounded-full border border-amber-300 bg-amber-50 px-4 py-2 text-sm font-medium text-amber-800 transition hover:bg-amber-100"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleDelete(post.id)}
+                            className="rounded-full border border-red-200 bg-red-50 px-4 py-2 text-sm font-medium text-red-700 transition hover:bg-red-100"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-wrap gap-2">
+                        {(post.tags ?? []).slice(0, 4).map((tag) => (
+                          <span
+                            key={tag}
+                            className="rounded-full border border-stone-300 px-3 py-1 text-xs font-medium text-stone-700"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+
+                      <div className="flex flex-wrap items-center justify-between gap-4 border-t border-stone-200 pt-4 text-sm text-stone-500">
+                        <p>
+                        {new Intl.DateTimeFormat("en-US", {
+                          month: "short",
+                          day: "numeric",
+                          year: "numeric",
+                        }).format(new Date(post.publishedAt ?? post.id))}
+                        </p>
+                        <p>{post.images.length} images</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </article>
+            ))}
+          </div>
+        </section>
       </div>
-    </section>
+    </main>
   );
 }
