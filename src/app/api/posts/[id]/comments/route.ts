@@ -117,7 +117,7 @@ export async function POST(
   }
 
   const posts = await readPosts();
-  const idx = posts.findIndex((p) => p.id === id);
+  const idx = posts.findIndex((p) => p.id === id && p.status === "published");
   if (idx === -1) {
     return NextResponse.json({ error: "Post not found" }, { status: 404 });
   }
@@ -145,7 +145,7 @@ export async function GET(
 ) {
   const { id } = await params;
   const posts = await readPosts();
-  const post = posts.find((p) => p.id === id);
+  const post = posts.find((p) => p.id === id && p.status === "published");
   if (!post) {
     return NextResponse.json({ error: "Post not found" }, { status: 404 });
   }

@@ -51,15 +51,6 @@ export async function GET(request: NextRequest) {
     rel.startsWith("variants/") ||
     (S3_PREFIX && rel.startsWith(`${S3_PREFIX}/`));
 
-  if (S3_BUCKET && looksLikeKey) {
-    // If rel already includes prefix, keep it, otherwise prepend prefix in the URL builder
-    const key = rel.replace(/^\/+/, "");
-    const url = CDN_URL ? `${CDN_URL}/${key}` : toPublicS3Url(key);
-    return NextResponse.redirect(url);
-  }
-
-  // Local fallback for dev/legacy
-  // If rel starts with "uploads/", strip it because local path is /public/uploads/<filename>
   let localRel = rel;
   if (localRel.startsWith("uploads/")) localRel = localRel.replace(/^uploads\//, "");
 
@@ -82,6 +73,13 @@ export async function GET(request: NextRequest) {
       headers: { "Content-Type": mime },
     });
   } catch {
+    if (S3_BUCKET && looksLikeKey) {
+      // If rel already includes prefix, keep it, otherwise prepend prefix in the URL builder
+      const key = rel.replace(/^\/+/, "");
+      const url = CDN_URL ? `${CDN_URL}/${key}` : toPublicS3Url(key);
+      return NextResponse.redirect(url);
+    }
+
     return new NextResponse("Not found", { status: 404 });
   }
 }

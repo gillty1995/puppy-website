@@ -67,6 +67,11 @@ export async function storePuppyImage(file: File): Promise<string> {
           ContentType: "image/jpeg",
         })
       );
+      try {
+        await fs.writeFile(path.join(uploadDir, filename), processedBuffer);
+      } catch (err) {
+        console.warn("Puppy image local mirror failed:", err);
+      }
       return storedPath;
     } catch (err) {
       console.error("Puppy image upload to S3 failed, falling back to local write:", err);

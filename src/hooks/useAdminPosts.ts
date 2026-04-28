@@ -1,14 +1,8 @@
 import { useEffect, useState } from "react";
-
-interface Post {
-  id: string;
-  title: string;
-  body: string;
-  images: string[];
-}
+import type { BlogPostLike } from "@/lib/blog";
 
 export function useAdminPosts() {
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<BlogPostLike[]>([]);
   const [isPublishing, setIsPublishing] = useState(false);
   const [publishProgress, setPublishProgress] = useState(0);
   const [isSavingEdit, setIsSavingEdit] = useState(false);
