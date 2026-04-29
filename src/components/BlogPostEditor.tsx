@@ -440,7 +440,7 @@ export default function BlogPostEditor({
           <button
             type="submit"
             disabled={isSaving || !isDirty}
-            className="rounded-full bg-emerald-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-emerald-500 disabled:cursor-not-allowed disabled:bg-emerald-300"
+            className="rounded-full !bg-emerald-600 px-5 py-3 text-sm font-medium !text-white shadow-sm transition hover:!bg-emerald-500 disabled:cursor-not-allowed disabled:!bg-emerald-300"
           >
             {buttonLabel}
           </button>

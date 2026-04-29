@@ -73,13 +73,14 @@ export default function PuppyWaitlistCta() {
         </motion.div>
 
         <motion.p
-          className="mt-5 text-sm leading-7 text-gray-500"
+          className="mx-auto mt-5 max-w-xl text-center text-sm leading-7 text-gray-500"
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.35 }}
           transition={{ duration: 0.6, delay: 0.24 }}
         >
-          Waitlist deposit: $500, non-refundable for 18 months.
+          Waitlist deposit: $500. It is non-refundable for 18 months and will be
+          applied toward the final puppy purchase price.
         </motion.p>
       </div>
     </section>
