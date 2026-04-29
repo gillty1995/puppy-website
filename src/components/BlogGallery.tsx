@@ -117,7 +117,7 @@ export default function BlogGallery({ images, title }: BlogGalleryProps) {
             swipeStartX.current = null;
             swipePointerId.current = null;
           }}
-          className="group relative block w-full cursor-pointer overflow-hidden bg-stone-100 text-left"
+          className="group relative block w-full cursor-pointer overflow-hidden bg-stone-100 text-left touch-pan-y"
           aria-label={`Open gallery for ${title}`}
         >
           <div className="relative aspect-[4/3] w-full sm:aspect-[3/2] lg:aspect-[4/3]">
@@ -126,7 +126,7 @@ export default function BlogGallery({ images, title }: BlogGalleryProps) {
               alt={title}
               fill
               sizes="(max-width: 1024px) 100vw, 70vw"
-              className="object-cover transition duration-500 group-hover:scale-[1.03]"
+              className="object-contain transition duration-500 group-hover:scale-[1.03]"
             />
             <div className="absolute inset-x-0 top-0 flex items-start justify-between gap-3 p-4 text-white">
               <span className="rounded-full bg-black/35 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] backdrop-blur">
@@ -232,7 +232,7 @@ export default function BlogGallery({ images, title }: BlogGalleryProps) {
               </button>
 
               <div
-                className="relative flex h-full w-full items-center justify-center"
+                className="relative flex h-full w-full items-center justify-center touch-pan-y select-none"
                 onPointerDown={onPointerDown}
                 onPointerUp={onPointerUp}
                 onPointerCancel={() => {

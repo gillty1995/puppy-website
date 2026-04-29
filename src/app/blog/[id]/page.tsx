@@ -67,23 +67,23 @@ export default async function PostPage({ params }: PageProps) {
         </div>
 
         <article className="mt-8 overflow-hidden rounded-[2.5rem] border border-stone-200 bg-white shadow-[0_24px_80px_rgba(15,23,42,0.08)]">
-          <div className="grid gap-0 lg:grid-cols-[1.2fr_0.8fr]">
-            <div className="p-8 sm:p-10 lg:p-14">
+          <div className="grid gap-0 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
+            <div className="min-w-0 p-8 sm:p-10 lg:p-14">
               <p className="text-sm uppercase tracking-[0.35em] text-emerald-700">
                 {publishedAt}
               </p>
-              <h1 className="mt-4 max-w-3xl text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+              <h1 className="mt-4 max-w-3xl break-words text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
                 {post.title}
               </h1>
 
-              <div className="mt-8 rounded-[2rem] border border-stone-200 bg-stone-50 p-5 sm:p-6">
-                <p className="whitespace-pre-line text-base leading-8 text-stone-700">
+              <div className="mt-8 min-w-0 rounded-[2rem] border border-stone-200 bg-stone-50 p-5 sm:p-6">
+                <p className="whitespace-pre-wrap break-words text-base leading-8 text-stone-700">
                   {post.body}
                 </p>
               </div>
             </div>
 
-            <div className="border-t border-stone-200 bg-stone-50 p-5 sm:p-6 lg:border-l lg:border-t-0">
+            <div className="min-w-0 border-t border-stone-200 bg-stone-50 p-5 sm:p-6 lg:border-l lg:border-t-0">
               <BlogGallery images={post.images} title={post.title} />
             </div>
           </div>
