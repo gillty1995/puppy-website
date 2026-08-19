@@ -4,6 +4,9 @@ import BlogGallery from "@/components/BlogGallery";
 import { readPosts } from "@/data/posts";
 import { sortBlogPosts } from "@/lib/blog";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 interface PageProps {
   params: Promise<{ id: string }>;
 }

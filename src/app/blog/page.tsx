@@ -3,6 +3,9 @@ import StaticImg from "@/components/StaticImg";
 import { readPosts } from "@/data/posts";
 import { getBlogImages, resolveBlogImageSrc, sortBlogPosts } from "@/lib/blog";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function BlogPage() {
   const posts = sortBlogPosts(
     (await readPosts()).filter((post) => post.status === "published")
