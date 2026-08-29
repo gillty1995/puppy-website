@@ -10,6 +10,7 @@ interface PuppyCardProps {
   image: string;
   price: number | null;
   status?: "available" | "reserved" | "adopted";
+  sex?: "male" | "female";
 }
 
 export default function PuppyCard({
@@ -18,6 +19,7 @@ export default function PuppyCard({
   image,
   price,
   status = "available",
+  sex,
 }: PuppyCardProps) {
   const priceLabel = (() => {
     if (status === "adopted") return "ADOPTED";
@@ -67,6 +69,11 @@ export default function PuppyCard({
 
         {/* Name sits below the picture */}
         <h3 className="mt-4 text-4xl font-semibold text-gray-900">{name}</h3>
+        {sex ? (
+          <p className="mt-1 text-lg font-medium text-gray-700">
+            {sex === "male" ? "Male" : "Female"}
+          </p>
+        ) : null}
       </div>
     </Link>
   );

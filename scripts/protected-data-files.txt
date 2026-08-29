@@ -1,0 +1,6 @@
+src/data/adoptions.json
+src/data/commentLeads.json
+src/data/pendingReviews.json
+src/data/posts.json
+src/data/puppies.json
+src/data/waitlist.json

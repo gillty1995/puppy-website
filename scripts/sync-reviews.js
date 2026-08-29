@@ -72,7 +72,7 @@ for (const adoption of byId.values()) {
 }
 
 // 4. Write merged result
-fs.writeFileSync(local, JSON.stringify(merged, null, 2));
+fs.writeFileSync(local, `${JSON.stringify(merged, null, 2)}\n`);
 console.log("Merged adoptions.json written.");
 
 // 5. Clean up temp file

@@ -27,6 +27,7 @@ export default async function PuppyGallery() {
                   image={p.image}
                   price={p.currentPrice}
                   status={p.status}
+                  sex={p.sex}
                 />
               </div>
             </div>
@@ -41,6 +42,7 @@ export default async function PuppyGallery() {
             image={p.image}
             price={p.currentPrice}
             status={p.status}
+            sex={p.sex}
           />
         );
       })}

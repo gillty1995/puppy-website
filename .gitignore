@@ -50,6 +50,7 @@ next-env.d.ts
 /src/data/posts.json
 /src/data/commentLeads.json
 /exports/
+/backups/live-data/
 
 # ignore scripts folder
 /scripts/# toolchain/binaries accidentally added

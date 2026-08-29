@@ -56,6 +56,12 @@ export default async function PuppyPage(props: {
             <p>
               <strong>Color:</strong> {puppy.color}
             </p>
+            {puppy.sex ? (
+              <p>
+                <strong>Gender:</strong>{" "}
+                {puppy.sex === "male" ? "Male" : "Female"}
+              </p>
+            ) : null}
             <p>
               <strong>Description:</strong> {puppy.description}
             </p>

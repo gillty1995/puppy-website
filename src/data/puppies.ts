@@ -7,6 +7,7 @@ import {
 } from "@/data/defaultPuppies";
 
 export type PuppyStatus = "available" | "reserved" | "adopted";
+export type PuppySex = "male" | "female";
 
 export interface PuppyPaymentState {
   depositPaidAmount?: number;
@@ -29,6 +30,7 @@ export interface PuppyRecord {
   currentPrice: number | null;
   depositAmount: number;
   status: PuppyStatus;
+  sex?: PuppySex;
   age: string;
   color: string;
   description: string;
@@ -69,6 +71,8 @@ function normalizePuppy(puppy: Partial<PuppyRecord>, fallbackLitterId?: string):
       puppy.status === "reserved" || puppy.status === "adopted"
         ? puppy.status
         : "available",
+    sex:
+      puppy.sex === "male" || puppy.sex === "female" ? puppy.sex : undefined,
     age: typeof puppy.age === "string" ? puppy.age : "",
     color: typeof puppy.color === "string" ? puppy.color : "",
     description:
@@ -158,6 +162,7 @@ export interface PuppyDraft {
   currentPrice: number | null;
   depositAmount: number;
   status: PuppyStatus;
+  sex?: PuppySex;
   age: string;
   color: string;
   description: string;
