@@ -29,6 +29,10 @@ export async function PUT(
     const imageFile = formData.get("image");
     const nextImage =
       imageFile instanceof File ? await storePuppyImage(imageFile) : existing.image;
+    const sexValue = getFormValue(formData, "sex");
+    const sex = sexValue === "male" || sexValue === "female"
+      ? sexValue
+      : existing.sex;
 
     const updated = await updatePuppy(id, {
       name: getFormValue(formData, "name") || existing.name,
@@ -45,6 +49,7 @@ export async function PUT(
         getFormValue(formData, "status") === "adopted"
           ? (getFormValue(formData, "status") as "reserved" | "adopted")
           : "available",
+      sex,
       age: getFormValue(formData, "age") || existing.age,
       color: getFormValue(formData, "color") || existing.color,
       description: getFormValue(formData, "description") || existing.description,

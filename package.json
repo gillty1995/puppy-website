@@ -14,7 +14,8 @@
     "push-images": "rsync -avz -e \"ssh -i $DEPLOY_KEY\" ./public/uploads/ $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/public/uploads/",
     "sync-all": "npm run sync-posts && npm run sync-images",
     "sync-reviews": "node scripts/sync-reviews.js",
-    "deploy": "npm run build && rsync -avz --delete -e \"ssh -i $DEPLOY_KEY\" --exclude 'node_modules' --exclude '.git' --exclude 'src/data/posts.json' --exclude 'src/data/puppies.json' --exclude 'src/data/pendingReviews.json' --exclude 'src/data/commentLeads.json' --exclude 'public/uploads/' ./ $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH && npm run push-images && ssh -i $DEPLOY_KEY $DEPLOY_USER@$DEPLOY_HOST \"bash -lc 'cd $DEPLOY_PATH && npm install --production && (pm2 restart textilepoms || pm2 start \\\"npm start\\\" --name textilepoms)'\"",
+    "backup-live-data": "bash scripts/backup-live-data-local.sh",
+    "deploy": "bash scripts/deploy-flow.sh",
     "worker": "node ./src/workers/imageProcessor.js",
     "enqueue-test": "node ./src/scripts/enqueue-test.js"
   },

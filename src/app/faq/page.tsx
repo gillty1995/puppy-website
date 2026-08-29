@@ -95,8 +95,9 @@ export default function FAQPage() {
             </h2>
             <p>
               Our puppies range from $1,000 to $3,500 depending on coat color,
-              markings, and sex. If you apply for the reservation deposit of
-              $1,000, it will be applied to the final fee.
+              markings, and individual puppy details. If you apply for the
+              reservation deposit of $1,000, it will be applied to the final
+              fee.
             </p>
           </div>
         </div>

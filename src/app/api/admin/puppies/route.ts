@@ -27,6 +27,9 @@ export async function POST(request: Request) {
     const status = formData.get("status") === "reserved" || formData.get("status") === "adopted"
       ? (formData.get("status") as "reserved" | "adopted")
       : "available";
+    const sex = formData.get("sex") === "male" || formData.get("sex") === "female"
+      ? (formData.get("sex") as "male" | "female")
+      : undefined;
     const currentPriceRaw = String(formData.get("currentPrice") || "").trim();
     const depositAmountRaw = String(formData.get("depositAmount") || "").trim();
     const imageFile = formData.get("image");
@@ -46,6 +49,7 @@ export async function POST(request: Request) {
       currentPrice: currentPriceRaw === "" ? null : Number(currentPriceRaw),
       depositAmount: depositAmountRaw === "" ? 1000 : Number(depositAmountRaw),
       status,
+      sex,
       age,
       color,
       description,

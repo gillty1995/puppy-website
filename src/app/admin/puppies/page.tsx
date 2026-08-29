@@ -6,6 +6,7 @@ import { DEFAULT_PUPPY_SKILLS } from "@/data/defaultPuppies";
 import { resolvePuppyImageSrc } from "@/lib/puppyImageSrc";
 
 type PuppyStatus = "available" | "reserved" | "adopted";
+type PuppySex = "male" | "female";
 
 interface PuppyAdminRecord {
   id: string;
@@ -15,6 +16,7 @@ interface PuppyAdminRecord {
   currentPrice: number | null;
   depositAmount: number;
   status: PuppyStatus;
+  sex?: PuppySex;
   age: string;
   color: string;
   description: string;
@@ -35,6 +37,7 @@ interface PuppyFormState {
   currentPrice: string;
   depositAmount: string;
   status: PuppyStatus;
+  sex: PuppySex | "";
   age: string;
   color: string;
   description: string;
@@ -48,6 +51,7 @@ const EMPTY_FORM: PuppyFormState = {
   currentPrice: "3000",
   depositAmount: "1000",
   status: "available",
+  sex: "",
   age: "",
   color: "",
   description: "",
@@ -63,6 +67,7 @@ function toFormState(puppy: PuppyAdminRecord): PuppyFormState {
       puppy.currentPrice === null ? "" : String(puppy.currentPrice ?? ""),
     depositAmount: String(puppy.depositAmount ?? 1000),
     status: puppy.status,
+    sex: puppy.sex || "",
     age: puppy.age,
     color: puppy.color,
     description: puppy.description,
@@ -203,6 +208,7 @@ export default function AdminPuppiesPage() {
       formData.append("currentPrice", draft.currentPrice);
       formData.append("depositAmount", draft.depositAmount);
       formData.append("status", draft.status);
+      formData.append("sex", draft.sex);
       formData.append("age", draft.age);
       formData.append("color", draft.color);
       formData.append("description", draft.description);
@@ -253,6 +259,7 @@ export default function AdminPuppiesPage() {
       formData.append("currentPrice", createForm.currentPrice);
       formData.append("depositAmount", createForm.depositAmount);
       formData.append("status", createForm.status);
+      formData.append("sex", createForm.sex);
       formData.append("age", createForm.age);
       formData.append("color", createForm.color);
       formData.append("description", createForm.description);
@@ -335,6 +342,7 @@ export default function AdminPuppiesPage() {
       formData.append("currentPrice", draft.currentPrice);
       formData.append("depositAmount", draft.depositAmount);
       formData.append("status", "available");
+      formData.append("sex", draft.sex);
       formData.append("age", draft.age);
       formData.append("color", draft.color);
       formData.append("description", draft.description);
@@ -568,6 +576,22 @@ export default function AdminPuppiesPage() {
                 <option value="available">Available</option>
                 <option value="reserved">Reserved</option>
                 <option value="adopted">Adopted</option>
+              </select>
+            </label>
+            <label className="block">
+              <span className="mb-2 block text-sm font-medium text-gray-700">
+                Gender
+              </span>
+              <select
+                value={createForm.sex}
+                onChange={(e) =>
+                  updateCreateForm("sex", e.target.value as PuppySex | "")
+                }
+                className="w-full rounded-2xl border border-stone-300 px-4 py-3 text-gray-900 outline-none transition focus:border-emerald-500"
+              >
+                <option value="">Select gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
               </select>
             </label>
             <label className="block">
@@ -824,6 +848,26 @@ export default function AdminPuppiesPage() {
                               <option value="available">Available</option>
                               <option value="reserved">Reserved</option>
                               <option value="adopted">Adopted</option>
+                            </select>
+                          </label>
+                          <label className="block">
+                            <span className="mb-2 block text-sm font-medium text-gray-700">
+                              Gender
+                            </span>
+                            <select
+                              value={draft.sex}
+                              onChange={(e) =>
+                                updateDraft(
+                                  puppy.id,
+                                  "sex",
+                                  e.target.value as PuppySex | ""
+                                )
+                              }
+                              className="w-full rounded-2xl border border-stone-300 px-4 py-3 text-gray-900 outline-none transition focus:border-emerald-500"
+                            >
+                              <option value="">Select gender</option>
+                              <option value="male">Male</option>
+                              <option value="female">Female</option>
                             </select>
                           </label>
                         </div>
