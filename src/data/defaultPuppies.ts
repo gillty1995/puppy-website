@@ -1,7 +1,7 @@
 import type { PuppyRecord } from "@/data/puppies";
 
 export const DEFAULT_PUPPY_SKILLS =
-  "Once old enough, our puppies learn potty training by being taken outside immediately after meals and staying out until they relieve themselves, which consistently reinforces proper bathroom habits. Thanks to early, positive exposure to new people and environments, they develop social skills that help them grow into friendly, confident dogs unafraid of strangers or unfamiliar situations.";
+  "Our puppies receive positive, gradual sensory training with different textures, sounds, and surfaces. They grow up amid the everyday bustle of family life and have age-appropriate opportunities to socialize with children, adults, other pets, and people in public settings, helping them build confidence and social skills.";
 
 export const defaultPuppies: PuppyRecord[] = [
   {

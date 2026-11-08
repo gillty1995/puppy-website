@@ -65,9 +65,6 @@ export default async function PuppyPage(props: {
             <p>
               <strong>Description:</strong> {puppy.description}
             </p>
-            <p>
-              <strong>Skills:</strong> {puppy.skills}
-            </p>
             {puppy.status !== "adopted" ? (
               <p>
                 <strong>Reservation Deposit:</strong> $
