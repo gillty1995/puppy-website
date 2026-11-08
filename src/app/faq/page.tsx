@@ -28,9 +28,9 @@ export default function FAQPage() {
             </h2>
             <p>
               Our Pomeranian puppies are typically ready for their forever homes
-              at 8 weeks of age. By this time, they have received their first
-              round of vaccinations, been dewormed, and gone through a thorough
-              health check by our veterinarian.
+              at 8 weeks of age. By this time, they are up to date on
+              age-appropriate vaccinations, have been dewormed, and have received
+              a thorough health check by our veterinarian.
             </p>
           </div>
 
@@ -55,8 +55,12 @@ export default function FAQPage() {
               What is included in the adoption package?
             </h2>
             <p>
-              Every puppy comes with up-to-date vaccinations and a sample can of
-              the food they&rsquo;re used to.
+              Every puppy is up to date on age-appropriate vaccinations, has
+              been dewormed, and comes with a health certificate from their
+              veterinarian. Their puppy package comes in a custom complimentary
+              bag and includes a personalized keychain of the puppy, a one-gallon
+              sample of their food, a slip leash that can also be used as a
+              harness, a full-sized blanket, and a deer antler.
             </p>
           </div>
 

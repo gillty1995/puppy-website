@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { DEFAULT_PUPPY_SKILLS } from "@/data/defaultPuppies";
 import { resolvePuppyImageSrc } from "@/lib/puppyImageSrc";
 
 type PuppyStatus = "available" | "reserved" | "adopted";
@@ -20,7 +19,6 @@ interface PuppyAdminRecord {
   age: string;
   color: string;
   description: string;
-  skills?: string;
   archivedAt?: string;
   payment?: {
     depositPaidAmount?: number;
@@ -41,7 +39,6 @@ interface PuppyFormState {
   age: string;
   color: string;
   description: string;
-  skills: string;
   reservedByEmail: string;
   reservedByName: string;
 }
@@ -55,7 +52,6 @@ const EMPTY_FORM: PuppyFormState = {
   age: "",
   color: "",
   description: "",
-  skills: DEFAULT_PUPPY_SKILLS,
   reservedByEmail: "",
   reservedByName: "",
 };
@@ -71,7 +67,6 @@ function toFormState(puppy: PuppyAdminRecord): PuppyFormState {
     age: puppy.age,
     color: puppy.color,
     description: puppy.description,
-    skills: puppy.skills || DEFAULT_PUPPY_SKILLS,
     reservedByEmail: puppy.payment?.reservedByEmail || "",
     reservedByName: puppy.payment?.reservedByName || "",
   };
@@ -212,7 +207,6 @@ export default function AdminPuppiesPage() {
       formData.append("age", draft.age);
       formData.append("color", draft.color);
       formData.append("description", draft.description);
-      formData.append("skills", draft.skills);
       formData.append(
         "reservedByEmail",
         resetPayment ? "" : draft.reservedByEmail
@@ -263,7 +257,6 @@ export default function AdminPuppiesPage() {
       formData.append("age", createForm.age);
       formData.append("color", createForm.color);
       formData.append("description", createForm.description);
-      formData.append("skills", createForm.skills || DEFAULT_PUPPY_SKILLS);
       formData.append("image", createFileState.file);
 
       const response = await fetch("/api/admin/puppies", {
@@ -346,7 +339,6 @@ export default function AdminPuppiesPage() {
       formData.append("age", draft.age);
       formData.append("color", draft.color);
       formData.append("description", draft.description);
-      formData.append("skills", draft.skills);
       formData.append("reservedByEmail", "");
       formData.append("reservedByName", "");
       formData.append("resetPayment", "true");
@@ -473,7 +465,7 @@ export default function AdminPuppiesPage() {
           </div>
         </div>
 
-        <div className="mt-8 grid gap-4 md:grid-cols-3">
+        <div className="mt-8 grid gap-4 md:grid-cols-2">
           <div className="rounded-[1.75rem] border border-stone-200 bg-white px-6 py-5 shadow-sm">
             <p className="text-xs uppercase tracking-[0.3em] text-stone-500">
               Active Puppies
@@ -488,14 +480,6 @@ export default function AdminPuppiesPage() {
             </p>
             <p className="mt-2 text-3xl font-bold text-gray-900">
               {archivedCount}
-            </p>
-          </div>
-          <div className="rounded-[1.75rem] border border-stone-200 bg-white px-6 py-5 shadow-sm">
-            <p className="text-xs uppercase tracking-[0.3em] text-stone-500">
-              Shared Skills Copy
-            </p>
-            <p className="mt-2 text-sm leading-6 text-gray-700">
-              {DEFAULT_PUPPY_SKILLS.slice(0, 120)}...
             </p>
           </div>
         </div>
@@ -513,8 +497,7 @@ export default function AdminPuppiesPage() {
                 Create New Puppy
               </h2>
               <p className="mt-1 text-sm text-gray-600">
-                Add a new card, upload the primary image, and seed the litter
-                with the default skills text.
+                Add a new card with its description and primary image.
               </p>
             </div>
             <p className="text-sm text-stone-500">
@@ -631,17 +614,6 @@ export default function AdminPuppiesPage() {
                 }
                 className="w-full rounded-3xl border border-stone-300 px-4 py-3 text-gray-900 outline-none transition focus:border-emerald-500"
                 placeholder="Short description for the puppy card..."
-              />
-            </label>
-            <label className="block">
-              <span className="mb-2 block text-sm font-medium text-gray-700">
-                Skills
-              </span>
-              <textarea
-                rows={5}
-                value={createForm.skills}
-                onChange={(e) => updateCreateForm("skills", e.target.value)}
-                className="w-full rounded-3xl border border-stone-300 px-4 py-3 text-gray-900 outline-none transition focus:border-emerald-500"
               />
             </label>
           </div>
@@ -913,19 +885,6 @@ export default function AdminPuppiesPage() {
                                   "description",
                                   e.target.value
                                 )
-                              }
-                              className="w-full rounded-3xl border border-stone-300 px-4 py-3 text-gray-900 outline-none transition focus:border-emerald-500"
-                            />
-                          </label>
-                          <label className="block">
-                            <span className="mb-2 block text-sm font-medium text-gray-700">
-                              Skills
-                            </span>
-                            <textarea
-                              rows={5}
-                              value={draft.skills}
-                              onChange={(e) =>
-                                updateDraft(puppy.id, "skills", e.target.value)
                               }
                               className="w-full rounded-3xl border border-stone-300 px-4 py-3 text-gray-900 outline-none transition focus:border-emerald-500"
                             />

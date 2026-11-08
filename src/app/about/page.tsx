@@ -21,11 +21,10 @@ export default function AboutPage() {
         {/* Content */}
         <div className="space-y-6 text-gray-700">
           <p>
-            Cashmere, our beloved dam, joined our family three years ago —
-            marking the start of this wonderful journey. A year later, Corduroy,
-            our affectionate sire, became part of our home after spending his
-            first eight weeks in Tennessee with his purebred orange Pomeranian
-            parents.
+            Cashmere and Corduroy are the loving parents of our puppies and
+            cherished members of our family. Their affectionate personalities,
+            playful spirits, and gentle temperaments make them wonderful
+            companions and bring so much joy to our home.
           </p>
 
           <hr className="border-t border-gray-200 my-6" />
@@ -51,19 +50,30 @@ export default function AboutPage() {
 
           <p>
             Beyond breeding, they’re fantastic family dogs: brilliant with our
-            five-year-old son, gentle with our cats, and welcoming to every
-            foster animal who passes through our home. Their loving spirits have
-            shaped our commitment to raising well-adjusted, happy puppies.
+            seven-year-old and one-year-old, gentle with our cats, and welcoming
+            to every foster animal who passes through our home. Their loving
+            spirits have shaped our commitment to raising well-adjusted, happy
+            puppies.
           </p>
 
           <hr className="border-t border-gray-200 my-6" />
 
           <p>
-            As a Fear Free–certified shelter employee, I’m confident in our
-            family’s ability to provide top-tier care: from socialization and
-            training to health screenings and enrichment. We look forward to
-            sharing these wonderful dogs with your family — bringing joy,
-            companionship, and a lifetime of memories.
+            Blake the owner has over five years of experience working in humane
+            society shelters and has completed Fear Free Certified Shelter
+            training. Our family provides attentive care, enrichment, and
+            training to help each puppy grow in confidence.
+          </p>
+
+          <p>
+            Our puppies are unregistered pet quality puppies. They are up to
+            date on age-appropriate vaccinations and are dewormed. They also
+            receive positive, gradual sensory training with different textures,
+            sounds, and surfaces while growing up amid the everyday bustle of
+            family life. Time with our children, other pets, adults, and people
+            in public settings helps them become comfortable around people and
+            animals. We love watching each puppy’s personality blossom as they
+            grow into confident, affectionate companions.
           </p>
         </div>
         <div className="border-t border-gray-300 mt-8" />
